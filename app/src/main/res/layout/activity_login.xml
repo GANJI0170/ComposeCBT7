@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#F3F2EF"
+    tools:context=".LoginActivity">
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#22CB88">
+
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/통합게시판"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F3F2EF"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/editTextTextPersonName4"
+                            android:layout_width="200dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="검색어 입력"
+                            android:inputType="textPersonName"
+                            android:text="" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="411dp"
+                        android:layout_height="219dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="2dp"
+                            android:text="Missing Back"
+                            android:textAlignment="center"
+                            android:textColor="#403322"
+                            android:textSize="45sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/분실물게시판"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F3F2EF"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/분실물게시글목록"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F3F2EF"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/습득물게시판"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F3F2EF"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/습득물게시글목록"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F3F2EF"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </TabHost>
+</RelativeLayout>
