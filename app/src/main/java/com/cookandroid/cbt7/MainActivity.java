@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Toast.makeText(MainActivity.this, "회원가입", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(in);
             }
         });
         lostidbtn.setOnClickListener(new View.OnClickListener(){
