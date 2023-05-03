@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "ㅊㅊ", Toast.LENGTH_SHORT).show();
                 Intent in = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(in);
+                finish();
             }
         });
         lostidbtn.setOnClickListener(new View.OnClickListener(){
