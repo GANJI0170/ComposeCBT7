@@ -1,21 +1,24 @@
 package com.cookandroid.cbt7;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
-
-import android.os.Bundle;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-/*import org.apache.commons.io.IOUtils;
-import opennlp.tools.tokenize.SimpleTokenizer;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.tokenize.TokenizerModel;
-*/
+
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.KomoranResult;
+import kr.co.shineware.nlp.komoran.model.Token;
+
 public class SearchActivity extends AppCompatActivity {
 
     @Override
@@ -24,7 +27,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         EditText keyword = (EditText)findViewById(R.id.keyword);
 
-        /*public class LostAndFoundSearch {
+        public class LostAndFoundSearch {
             private static final String TAG = "LostAndFoundSearch";
 
             private Context mContext;
@@ -37,25 +40,30 @@ public class SearchActivity extends AppCompatActivity {
 
             public void loadKeywords() {
                 try {
-                    // OpenNLP tokenizer 초기화
-                    //TokenizerModel model = new TokenizerModel(getAssetInputStream("en-token.bin"));
-                    //Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
+                    // 코모란 초기화
+                    Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
 
                     // 분실물과 습득물에 관한 키워드를 저장할 HashMap 초기화
 
                     // 키워드가 포함된 텍스트 파일 읽어오기
-                    String text = IOUtils.toString(getAssetInputStream("lostfoundkeywords.txt"), "UTF-8");
-
-                    // 텍스트 파일에서 키워드 추출하여 HashMap에 저장
-                    String[] tokens = tokenizer.tokenize(text);
-                    for (int i = 0; i < tokens.length; i++) {
-                        if (tokens[i].equals("lost") || tokens[i].equals("found")) {
-                            String keyword = tokens[i] + " " + tokens[i+1];
-                            String meaning = tokens[i+2];
-                            mDictionary.put(keyword, meaning);
-                            i += 2;
+                    InputStream inputStream = getAssetInputStream("lost_and_found_keywords.txt");
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        // 텍스트 파일에서 키워드 추출하여 HashMap에 저장
+                        KomoranResult result = komoran.analyze(line);
+                        List<Token> tokens = result.getTokenList();
+                        for (Token token : tokens) {
+                            String pos = token.getPos();
+                            if (pos.equals("NNP") || pos.equals("NNG")) { // 고유명사 또는 일반명사만 추출
+                                String keyword = token.getMorph();
+                                String meaning = line.replaceAll(keyword, "").trim();
+                                mDictionary.put(keyword, meaning);
+                            }
                         }
                     }
+                    bufferedReader.close();
+                    inputStream.close();
                 } catch (IOException e) {
                     Log.e(TAG, "Failed to load keywords", e);
                 }
@@ -74,7 +82,5 @@ public class SearchActivity extends AppCompatActivity {
                 return assetManager.open(fileName);
             }
         }
-
-         */
     }
 }

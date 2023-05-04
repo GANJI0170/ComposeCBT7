@@ -11,7 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/openNLP" />
+            <option value="$PROJECT_DIR$/komoran" />
           </set>
         </option>
       </GradleProjectSettings>
