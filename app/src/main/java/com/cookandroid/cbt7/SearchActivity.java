@@ -42,6 +42,7 @@ public class SearchActivity extends AppCompatActivity {
                 String result = mSearch.searchKeyword(keyword.getText().toString());
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 // 검색 결과를 어떻게 처리할지 여기에 작성
+                // 결과값과 게시판 키워드 비교로 결과 출력 해줘야한다.
             }
         });
     }
@@ -91,6 +92,7 @@ class LostAndFoundSearch {
             return mDictionary.get(keyword);
         } else {
             return "해당 키워드를 찾을 수 없습니다.";
+            //검색어 없을시 그대로 검색되는 처리해줘야함.
         }
     }
 
