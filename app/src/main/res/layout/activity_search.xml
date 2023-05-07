@@ -21,16 +21,16 @@
                 android:id="@+id/keyword"
                 android:layout_width="363dp"
                 android:layout_height="48dp"
+                android:background="#22CB88"
                 android:ems="10"
-                android:background="#22CB88"
-                android:inputType="textPersonName"
-                android:hint="검색어를입력해주세요" />
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="#22CB88"
-                app:srcCompat="@drawable/searching" />
+                android:hint=" 검색어를 입력해주세요"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="찾" />
 
         </LinearLayout>
 
