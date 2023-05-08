@@ -62,7 +62,7 @@ class LostAndFoundSearch {
         try {
             // 코모란 초기화
             Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-
+            komoran.setUserDic("dic.user");
             // 키워드가 포함된 텍스트 파일 읽어오기
             InputStream inputStream = getAssetInputStream("lostfoundkeywords.txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -80,6 +80,8 @@ class LostAndFoundSearch {
                     }
                 }
             }
+            mDictionary.put("갤럭시6","휴대폰");
+            mDictionary.put("아이폰7","휴대폰");
             bufferedReader.close();
             inputStream.close();
         } catch (IOException e) {
@@ -91,7 +93,7 @@ class LostAndFoundSearch {
         if (mDictionary.containsKey(keyword)) {
             return mDictionary.get(keyword);
         } else {
-            return "해당 키워드를 찾을 수 없습니다.";
+            return "\"" + keyword + "\"";
             //검색어 없을시 그대로 검색되는 처리해줘야함.
         }
     }
