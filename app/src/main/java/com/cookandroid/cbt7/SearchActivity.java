@@ -80,8 +80,24 @@ class LostAndFoundSearch {
                     }
                 }
             }
-            mDictionary.put("갤럭시6","휴대폰");
-            mDictionary.put("아이폰7","휴대폰");
+            mDictionary.put("신용카드","카드");
+            mDictionary.put("체크카드","카드");
+            mDictionary.put("교통카드","카드");
+            mDictionary.put("크로스백","가방");
+            mDictionary.put("메신저백","가방");
+            mDictionary.put("서류가방","가방");
+            mDictionary.put("클러치백","가방");
+            mDictionary.put("파우치백","가방");
+            mDictionary.put("카드지갑","지갑");
+            mDictionary.put("여권지갑","지갑");
+            mDictionary.put("명합지갑","지갑");
+            mDictionary.put("동전지갑","지갑");
+            mDictionary.put("버킷햇","모자");
+            mDictionary.put("장지갑","지갑");
+            mDictionary.put("반지갑","지갑");
+            mDictionary.put("중지갑","지갑");
+            mDictionary.put("갤럭시","휴대폰");
+            mDictionary.put("아이폰","휴대폰");
             bufferedReader.close();
             inputStream.close();
         } catch (IOException e) {
