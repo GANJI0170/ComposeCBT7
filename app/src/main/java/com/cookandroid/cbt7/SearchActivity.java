@@ -92,6 +92,7 @@ class LostAndFoundSearch {
             mDictionary.put("여권지갑","지갑");
             mDictionary.put("명합지갑","지갑");
             mDictionary.put("동전지갑","지갑");
+            mDictionary.put("동전_지갑","지갑");
             mDictionary.put("버킷햇","모자");
             mDictionary.put("장지갑","지갑");
             mDictionary.put("반지갑","지갑");
