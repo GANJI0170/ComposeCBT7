@@ -62,8 +62,9 @@ class LostAndFoundSearch {
         try {
             // 코모란 초기화
             Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-            komoran.setUserDic("dic.user");
-            // 키워드가 포함된 텍스트 파일 읽어오기
+            komoran.setUserDic("assets/dic.user");
+
+            // 키워드가 포함된 텍스트 파일
             InputStream inputStream = getAssetInputStream("lostfoundkeywords.txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
@@ -91,14 +92,14 @@ class LostAndFoundSearch {
             mDictionary.put("카드지갑","지갑");
             mDictionary.put("여권지갑","지갑");
             mDictionary.put("명합지갑","지갑");
-            mDictionary.put("동전지갑","지갑");
-            mDictionary.put("동전_지갑","지갑");
             mDictionary.put("버킷햇","모자");
             mDictionary.put("장지갑","지갑");
             mDictionary.put("반지갑","지갑");
             mDictionary.put("중지갑","지갑");
             mDictionary.put("갤럭시","휴대폰");
             mDictionary.put("아이폰","휴대폰");
+            mDictionary.put("장우산","우산");
+
             bufferedReader.close();
             inputStream.close();
         } catch (IOException e) {
