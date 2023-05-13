@@ -38,8 +38,9 @@ public class SearchActivity extends AppCompatActivity {
         mSearch = new LostAndFoundSearch(this);
         mSearch.loadKeywords();
 
+        //사전 정의
 //        FileOutputStream fos;
-//        String strFileContents = "부캐\tNNP\n" + "제트플립\tNNP\n" + "갤럭시노트10\tNNP\n"
+//        String strFileContents = "부캐\tNNP\n" + "제트플립\tNNP\n" + "제트 플립\tNNP\n" + "갤럭시노트10\tNNP\n"
 //                +"아이폰13프로\tNNP\n"+"갤럭시S20울트라\tNNP\n"+"갤럭시S23울트라\tNNP\n"
 //                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
 //                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
@@ -57,7 +58,6 @@ public class SearchActivity extends AppCompatActivity {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
 
         EditText keyword = findViewById(R.id.keyword);
         Button btn1 = findViewById(R.id.btn1);
