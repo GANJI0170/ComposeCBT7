@@ -21,6 +21,7 @@
                 android:id="@+id/keyword"
                 android:layout_width="363dp"
                 android:layout_height="48dp"
+                android:layout_gravity="left"
                 android:background="#22CB88"
                 android:ems="10"
                 android:hint=" 검색어를 입력해주세요"

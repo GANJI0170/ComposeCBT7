@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "184628271931",
+    "project_id": "cdt7-c67d4",
+    "storage_bucket": "cdt7-c67d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184628271931:android:96c80487bd4e39aa52f51e",
+        "android_client_info": {
+          "package_name": "com.cookandroid.cbt7"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184628271931-42n3kufqeg9jno0ef21b9bp6fg5hsr3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx-A6TSvJemC_ud7g8Z5zQvIOsD5-NghU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184628271931-42n3kufqeg9jno0ef21b9bp6fg5hsr3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
