@@ -7,12 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,27 @@ public class SearchActivity extends AppCompatActivity {
 
         mSearch = new LostAndFoundSearch(this);
         mSearch.loadKeywords();
+
+//        FileOutputStream fos;
+//        String strFileContents = "부캐\tNNP\n" + "제트플립\tNNP\n" + "갤럭시노트10\tNNP\n"
+//                +"아이폰13프로\tNNP\n"+"갤럭시S20울트라\tNNP\n"+"갤럭시S23울트라\tNNP\n"
+//                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
+//                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
+//                +"거꾸로우산\tNNP\n"+"자동우산\tNNP\n"+"크로스백\tNNP\n"+"여행가방\tNNP\n"
+//                +"백팩\tNNP\n"+"토트백\tNNP\n"+"보스턴백\tNNP\n"+"베이스볼 캡\tNNP\n"
+//                +"비니\tNNP\n"+"페도라\tNNP\n"+"버킷햇\tNNP\n"+"트루퍼햇\tNNP\n"
+//                +"장지갑\tNNP\n"+"반지갑\tNNP\n"+"동전지갑\tNNP\n";
+//        try {
+//            fos = openFileOutput("userDic.txt", MODE_PRIVATE);
+//            fos.write(strFileContents.getBytes(StandardCharsets.UTF_8));
+//            fos.close();
+//            System.out.println("성공");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
 
         EditText keyword = findViewById(R.id.keyword);
         Button btn1 = findViewById(R.id.btn1);
@@ -62,7 +87,7 @@ class LostAndFoundSearch {
         try {
             // 코모란 초기화
             Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-            komoran.setUserDic("dic.user");
+            komoran.setUserDic("/data/data/com.cookandroid.cbt7/files/userDic.txt");
             // 키워드가 포함된 텍스트 파일 읽어오기
             InputStream inputStream = getAssetInputStream("lostfoundkeywords.txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -72,6 +97,7 @@ class LostAndFoundSearch {
                 KomoranResult result = komoran.analyze(line);
                 List<Token> tokens = result.getTokenList();
                 for (Token token : tokens) {
+                    System.out.println("token : " + token);
                     String pos = token.getPos();
                     if (pos.equals("NNP") || pos.equals("NNG")) { // 고유명사 또는 일반명사만 추출
                         String keyword = token.getMorph();
@@ -80,8 +106,7 @@ class LostAndFoundSearch {
                     }
                 }
             }
-            mDictionary.put("갤럭시6","휴대폰");
-            mDictionary.put("아이폰7","휴대폰");
+
             bufferedReader.close();
             inputStream.close();
         } catch (IOException e) {
