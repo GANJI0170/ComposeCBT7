@@ -83,6 +83,7 @@ class LostAndFoundSearch {
         mDictionary = new HashMap<>();
     }
 
+
     public void loadKeywords() {
         try {
             // 코모란 초기화
