@@ -1,20 +1,25 @@
 package com.cookandroid.cbt7;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_login);
         TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);
         tabHost1.setup() ;
@@ -30,6 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         tabHost1.addTab(ts1);
         tabHost1.addTab(ts2);
         tabHost1.addTab(ts3);
+
+
+
+
+
 
         EditText editkw = (EditText)findViewById(R.id.editkw) ;
         editkw.setOnClickListener(new View.OnClickListener(){

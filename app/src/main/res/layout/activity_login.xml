@@ -84,15 +84,11 @@
                     android:orientation="vertical">
 
 
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/분실물게시글목록"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#F3F2EF"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent" />
 
-
-                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/foundboard"
@@ -102,15 +98,11 @@
                     android:orientation="vertical">
 
 
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/습득물게시글목록"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#F3F2EF"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent" />
 
-
-                    </LinearLayout>
                 </LinearLayout>
 
             </FrameLayout>
