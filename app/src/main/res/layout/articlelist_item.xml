@@ -23,16 +23,20 @@
             <TextView
                 android:id="@+id/found_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
                 android:layout_margin="3sp"
-                android:text="제목 :"/>
+                android:text="제목 :"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/found_keyword"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
                 android:layout_margin="3sp"
-                android:text="키워드 :"/>
+                android:text="키워드 :"
+                android:textSize="15sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
