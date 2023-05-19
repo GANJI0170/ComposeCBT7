@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView1, recyclerView2;
     private RecyclerView.Adapter adapter1, adapter2;
@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         editkw1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(LoginActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(LoginActivity.this, SearchActivity.class);
+                Toast.makeText(HomeActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(in);
             }
         });
@@ -65,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
         editkw2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(LoginActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(LoginActivity.this, SearchActivity.class);
+                Toast.makeText(HomeActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(in);
             }
         });
@@ -74,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         editkw3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(LoginActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(LoginActivity.this, SearchActivity.class);
+                Toast.makeText(HomeActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(in);
             }
         });

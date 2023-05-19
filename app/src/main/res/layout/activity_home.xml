@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".LoginActivity">
+    tools:context=".HomeActivity">
 
-<!--    상단 탭호스트 3개 버전-->
     <TabHost
         android:id="@+id/tabHost1"
         android:layout_width="match_parent"
@@ -104,7 +103,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_margin="10sp"
+                        android:scrollbars="vertical"
+                        android:scrollbarFadeDuration="0">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
@@ -142,7 +144,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_margin="10sp"
+                        android:scrollbars="vertical"
+                        android:scrollbarFadeDuration="0">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
@@ -151,6 +156,19 @@
             </FrameLayout>
 
         </LinearLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menu_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity='bottom'
+            app:itemIconTint="@drawable/menu_item_color"
+            app:itemTextColor="@drawable/menu_item_color"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/main_menu_bottom"/>
     </TabHost>
+
+
+
 
 </RelativeLayout>
