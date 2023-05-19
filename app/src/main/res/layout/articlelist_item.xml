@@ -9,7 +9,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/found_image"
+            android:id="@+id/board_image"
             android:layout_width="80sp"
             android:layout_height="80sp"
             android:layout_margin="5sp"
@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/found_title"
+                android:id="@+id/board_title"
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
                 android:layout_weight="1"
@@ -30,7 +30,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                android:id="@+id/found_keyword"
+                android:id="@+id/board_keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
                 android:layout_weight="1"
@@ -45,21 +45,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/found_id"
+                    android:id="@+id/board_id"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="3sp"
                     android:text="작성자 :"/>
                 <TextView
-                    android:id="@+id/found_post_date"
+                    android:id="@+id/board_post_date"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="3sp"
                     android:text="작성일자 :" />
                 <TextView
-                    android:id="@+id/found_hits"
+                    android:id="@+id/board_hits"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

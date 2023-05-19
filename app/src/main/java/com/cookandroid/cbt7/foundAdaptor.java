@@ -17,11 +17,11 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.CustomViewHolder> {
-    private ArrayList<articleList> arrayList;
+public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHolder> {
+    private ArrayList<articlefoundList> arrayList;
     private Context context;
 
-    public CustomAdaptor(ArrayList<articleList> arrayList, Context context) {
+    public foundAdaptor(ArrayList<articlefoundList> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }
@@ -39,16 +39,16 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.CustomView
         Glide.with(holder.itemView)
                 .load(arrayList.get(position).getFound_image())
                 .into(holder.found_image);
-        holder.found_title.setText(arrayList.get(position).getfound_title());
+        holder.found_title.setText(arrayList.get(position).getFound_title());
         holder.found_title.setTextSize(Dimension.SP, 15);
         holder.found_title.setTextColor(Color.parseColor("#000000"));
         holder.found_title.setPaintFlags(holder.found_title.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-        holder.found_keyword.setText(arrayList.get(position).getfound_keyword());
+        holder.found_keyword.setText(arrayList.get(position).getFound_keyword());
         holder.found_keyword.setTextSize(Dimension.SP, 15);
         holder.found_keyword.setTextColor(Color.parseColor("#000000"));
-        holder.found_id.setText(arrayList.get(position).getfound_id());
-        holder.found_post_date.setText(arrayList.get(position).getfound_post_date());
-        holder.found_hits.setText(arrayList.get(position).getfound_hits());
+        holder.found_id.setText(arrayList.get(position).getFound_id());
+        holder.found_post_date.setText(arrayList.get(position).getFound_post_date());
+        holder.found_hits.setText(arrayList.get(position).getFound_hits());
     }
 
     @Override
@@ -66,12 +66,12 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.CustomView
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.found_image = itemView.findViewById(R.id.found_image);
-            this.found_title = itemView.findViewById(R.id.found_title);
-            this.found_keyword = itemView.findViewById(R.id.found_keyword);
-            this.found_id = itemView.findViewById(R.id.found_id);
-            this.found_post_date = itemView.findViewById(R.id.found_post_date);
-            this.found_hits = itemView.findViewById(R.id.found_hits);
+            this.found_image = itemView.findViewById(R.id.board_image);
+            this.found_title = itemView.findViewById(R.id.board_title);
+            this.found_keyword = itemView.findViewById(R.id.board_keyword);
+            this.found_id = itemView.findViewById(R.id.board_id);
+            this.found_post_date = itemView.findViewById(R.id.board_post_date);
+            this.found_hits = itemView.findViewById(R.id.board_hits);
         }
     }
 }
