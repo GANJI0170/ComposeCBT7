@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".HomeActivity">
 
     <TabHost
         android:id="@+id/tabHost1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0sp"
+        android:layout_weight="10">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +58,7 @@
                             android:text="검색" />
 
                     </LinearLayout>
-                    
+
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
@@ -156,19 +158,24 @@
             </FrameLayout>
 
         </LinearLayout>
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/menu_bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity='bottom'
-            app:itemIconTint="@drawable/menu_item_color"
-            app:itemTextColor="@drawable/menu_item_color"
-            app:labelVisibilityMode="labeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/main_menu_bottom"/>
+
     </TabHost>
 
+    <FrameLayout
+        android:id="@+id/framelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1"
+        android:background="#98EECC"
+        app:itemIconTint="@drawable/menu_item_color"
+        app:itemTextColor="@drawable/menu_item_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/main_menu_bottom"/>
 
 
-
-</RelativeLayout>
+</LinearLayout>

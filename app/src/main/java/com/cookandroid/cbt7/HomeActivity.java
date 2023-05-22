@@ -2,10 +2,20 @@ package com.cookandroid.cbt7;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cookandroid.cbt7.database.articlefoundList;
+import com.cookandroid.cbt7.database.articlelostList;
+import com.cookandroid.cbt7.database.foundAdaptor;
+import com.cookandroid.cbt7.database.lostAdaptor;
+import com.cookandroid.cbt7.navigation.fragment_home;
+import com.cookandroid.cbt7.navigation.fragment_myarticle;
+import com.cookandroid.cbt7.navigation.fragment_write;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,8 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -31,12 +43,23 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<articlelostList> arrayListlost;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference1, databaseReference2;
+    private fragment_home fragmentHome = new fragment_home();
+    private fragment_myarticle fragmentMyarticle = new fragment_myarticle();
+    private fragment_write fragmentWrite = new fragment_write();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+//      bottomNavigationView 설정
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.framelayout1);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.menu_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.menuhome);
+        bottomNavigationView.setOnNavigationItemSelectedListener(listener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentHome).commit();
+
+//      탭호스트 설정
         TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);
         tabHost1.setup() ;
         TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1");
@@ -45,13 +68,15 @@ public class HomeActivity extends AppCompatActivity {
         ts1.setContent(R.id.mainboard);
         ts2.setContent(R.id.lostboard);
         ts3.setContent(R.id.foundboard);
-        ts1.setIndicator("메인게시판");
+        ts1.setIndicator("홈");
         ts2.setIndicator("분실물게시판");
         ts3.setIndicator("습득물게시판");
         tabHost1.addTab(ts1);
         tabHost1.addTab(ts2);
         tabHost1.addTab(ts3);
 
+
+//      edittext 클릭시 검색화면으로 전환
         EditText editkw1 = (EditText)findViewById(R.id.editkw1) ;
         editkw1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -80,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+//      분실물 게시판 데이터베이스 연동
         recyclerView1 = findViewById(R.id.recyclerView1);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
         recyclerView1.addItemDecoration(dividerItemDecoration);
@@ -109,6 +135,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+//      습득물 게시판 데이터베이스 연동
         recyclerView2 = findViewById(R.id.recyclerView2);
         recyclerView2.addItemDecoration(dividerItemDecoration);
         recyclerView2.setHasFixedSize(true);
@@ -133,12 +160,28 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("LoginActivity", String.valueOf(error.toException()));
             }
         });
-
         adapter1 = new lostAdaptor(arrayListlost, this);
         adapter2 = new foundAdaptor(arrayListfound, this);
         recyclerView1.setAdapter(adapter1);
         recyclerView2.setAdapter(adapter2);
 
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                    case R.id.menuwriting:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentWrite).commit();
+                        return true;
+                    case R.id.menuhome:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentHome).commit();
+                        return true;
+                    case R.id.menulistofarticles:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentMyarticle).commit();
+                        return true;
+            }
+            return false;
+        }
+    };
 }
 

@@ -1,4 +1,4 @@
-package com.cookandroid.cbt7;
+package com.cookandroid.cbt7.database;
 
 public class articlelostList {
     private String lost_image;

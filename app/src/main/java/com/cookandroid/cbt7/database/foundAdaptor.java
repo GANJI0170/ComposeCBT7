@@ -1,4 +1,4 @@
-package com.cookandroid.cbt7;
+package com.cookandroid.cbt7.database;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cookandroid.cbt7.R;
 
 import java.util.ArrayList;
 
