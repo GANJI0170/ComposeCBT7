@@ -10,9 +10,7 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write);
+        setContentView(R.layout.fragmentwrite);
 
-        TextView test = (TextView) findViewById(R.id.test);
-        test.setText("글 작성 페이지입니다.");
     }
 }
