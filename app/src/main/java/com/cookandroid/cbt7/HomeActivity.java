@@ -10,7 +10,6 @@ import com.cookandroid.cbt7.database.articlefoundList;
 import com.cookandroid.cbt7.database.articlelostList;
 import com.cookandroid.cbt7.database.foundAdaptor;
 import com.cookandroid.cbt7.database.lostAdaptor;
-import com.cookandroid.cbt7.navigation.fragment_board;
 import com.cookandroid.cbt7.navigation.fragment_home;
 import com.cookandroid.cbt7.navigation.fragment_myarticle;
 import com.cookandroid.cbt7.navigation.fragment_write;
@@ -44,12 +43,13 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<articlelostList> arrayListlost;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference1, databaseReference2;
-    private fragment_home fragmentHome = new fragment_home();
-    private fragment_myarticle fragmentMyarticle = new fragment_myarticle();
-    private fragment_write fragmentWrite = new fragment_write();
-    private fragment_board fragmentboard = new fragment_board();
-    private Button BTNlost, BTNfound;
-    private LinearLayout l;
+    private Button btnSearch, btnwrite, btnmyarticle, btnalarm, btnprofile;
+
+//    private fragment_home fragmentHome = new fragment_home();
+//    private fragment_myarticle fragmentMyarticle = new fragment_myarticle();
+//    private fragment_write fragmentWrite = new fragment_write();
+//    private Button BTNlost, BTNfound;
+//    private LinearLayout l;
 
 
     @Override
@@ -83,38 +83,81 @@ public class HomeActivity extends AppCompatActivity {
         tabHost1.addTab(ts2);
         tabHost1.addTab(ts3);
 
+        boardDatabase();
 
-//      edittext 클릭시 검색화면으로 전환
-        EditText editkw1 = (EditText)findViewById(R.id.editkw1) ;
-        editkw1.setOnClickListener(new View.OnClickListener(){
+        EditText editkw = (EditText) findViewById(R.id.editkw);
+
+
+//      검색 버튼 클릭시 검색화면으로 전환
+        btnSearch = (Button)findViewById(R.id.btnSearch) ;
+        btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Toast.makeText(HomeActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
                 Intent in = new Intent(HomeActivity.this, SearchActivity.class);
+                in.putExtra("searchText", editkw.getText().toString());
                 startActivity(in);
             }
         });
-        EditText editkw2 = (EditText)findViewById(R.id.editkw2) ;
-        editkw2.setOnClickListener(new View.OnClickListener(){
+
+        btnwrite = (Button) findViewById(R.id.btnwrite);
+        btnwrite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Toast.makeText(HomeActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(HomeActivity.this, SearchActivity.class);
+            public void onClick(View view) {
+                Intent in = new Intent(getApplicationContext(), WriteActivity.class);
                 startActivity(in);
             }
         });
-        EditText editkw3 = (EditText)findViewById(R.id.editkw3) ;
-        editkw3.setOnClickListener(new View.OnClickListener(){
+        btnmyarticle = (Button) findViewById(R.id.btnmyarticle);
+        btnmyarticle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Toast.makeText(HomeActivity.this, "검색창이동", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(HomeActivity.this, SearchActivity.class);
+            public void onClick(View view) {
+                Intent in = new Intent(getApplicationContext(), MyarticleActivity.class);
+                startActivity(in);
+            }
+        });
+        btnalarm = (Button) findViewById(R.id.btnalarm);
+        btnalarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getApplicationContext(), AlarmActivity.class);
+                startActivity(in);
+            }
+        });
+        btnprofile = (Button) findViewById(R.id.btnprofile);
+        btnprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(in);
             }
         });
 
 
-//      분실물 게시판 데이터베이스 연동
+
+
+//        BTNfound = (Button) findViewById(R.id.BTNfound);
+//        BTNlost = (Button) findViewById(R.id.BTNlost);
+//
+//        BTNfound.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                callFragment(1);
+//
+//            }
+//        });
+//        BTNlost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                callFragment(2);
+//
+//            }
+//        });
+
+    }
+
+    private void boardDatabase() {
+        //      분실물 게시판 데이터베이스 연동
         recyclerView1 = findViewById(R.id.recyclerView1);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
         recyclerView1.addItemDecoration(dividerItemDecoration);
@@ -173,31 +216,9 @@ public class HomeActivity extends AppCompatActivity {
         adapter2 = new foundAdaptor(arrayListfound, this);
         recyclerView1.setAdapter(adapter1);
         recyclerView2.setAdapter(adapter2);
-
-
-
-//        BTNfound = (Button) findViewById(R.id.BTNfound);
-//        BTNlost = (Button) findViewById(R.id.BTNlost);
-//
-//        BTNfound.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                callFragment(1);
-//
-//            }
-//        });
-//        BTNlost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                callFragment(2);
-//
-//            }
-//        });
-
-
     }
 
-//
+
 //    private BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 //        @Override
 //        public boolean onNavigationItemSelected(@NonNull MenuItem item) {

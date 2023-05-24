@@ -15,7 +15,6 @@
             android:id="@+id/bpbtn"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:layout_gravity="left"
             android:background="#22CB88"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/bpbtn" />
