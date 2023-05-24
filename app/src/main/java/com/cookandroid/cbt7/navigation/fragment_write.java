@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.cookandroid.cbt7.R;
 
-public class fragment_write extends Fragment {
+public class fragment_write extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragmentwrite, container, false);
     }
+
+
 }
