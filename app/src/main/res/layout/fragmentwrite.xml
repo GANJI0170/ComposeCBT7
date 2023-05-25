@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#22CB88"
-            android:text=" 게시글 작성 "
+            android:text=" 게시글 작성"
             android:textColor="#FFFFFF"
             android:textSize="50sp"
             android:textAlignment="center"/>
