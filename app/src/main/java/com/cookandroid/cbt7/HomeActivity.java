@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView1, recyclerView2;
+    private RecyclerView recyclerView1, recyclerView2, recyclerView3;
     private RecyclerView.Adapter adapter1, adapter2;
     private RecyclerView.LayoutManager layoutManager1, layoutManager2;
     private ArrayList<articlefoundList> arrayListfound;
@@ -143,6 +143,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+
 //        BTNfound = (Button) findViewById(R.id.BTNfound);
 //        BTNlost = (Button) findViewById(R.id.BTNlost);
 //
@@ -164,7 +165,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void boardDatabase() {
-        //      분실물 게시판 데이터베이스 연동
+
         recyclerView1 = findViewById(R.id.recyclerView1);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
         recyclerView1.addItemDecoration(dividerItemDecoration);
