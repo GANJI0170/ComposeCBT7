@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<articlelostList> arrayListlost;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference1, databaseReference2;
-    private Button btnSearch, btnwrite, btnmyarticle, btnalarm, btnprofile;
+    private Button btnSearch, btnwrite, btnmyarticle, btnchat, btnalarm, btnprofile;
 
 //    private fragment_home fragmentHome = new fragment_home();
 //    private fragment_myarticle fragmentMyarticle = new fragment_myarticle();
@@ -116,6 +116,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
+        btnchat = (Button) findViewById(R.id.btnchat);
+        btnchat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(), ChatActivity.class);
+                startActivity(in);
+            }
+        });
         btnalarm = (Button) findViewById(R.id.btnalarm);
         btnalarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +140,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
-
 
 
 
