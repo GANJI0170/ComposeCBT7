@@ -15,7 +15,7 @@ public class fragment_write extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activvity_write, container, false);
+        return inflater.inflate(R.layout.activity_write, container, false);
     }
 
 

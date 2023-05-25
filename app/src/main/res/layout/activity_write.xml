@@ -23,7 +23,7 @@
                 android:background="#22CB88"
                 android:text=" 게시글 작성"
                 android:textColor="#FFFFFF"
-                android:textSize="50sp"
+                android:textSize="40sp"
                 android:textAlignment="center"/>
 
         </LinearLayout>
@@ -72,9 +72,7 @@
                 android:layout_margin="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="제목"
-                tools:layout_editor_absoluteX="110dp"
-                tools:layout_editor_absoluteY="0dp" />
+                android:hint="제목" />
 
             <EditText
                 android:id="@+id/editTextText3"
@@ -83,9 +81,7 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="키워드"
-                tools:layout_editor_absoluteX="110dp"
-                tools:layout_editor_absoluteY="40dp" />
+                android:hint="키워드" />
 
             <ImageButton
                 android:id="@+id/imagebtn"
@@ -93,8 +89,6 @@
                 android:layout_height="wrap_content"
                 android:background="#F3F2EF"
                 app:srcCompat="@drawable/plusbtn"
-                tools:layout_editor_absoluteX="120dp"
-                tools:layout_editor_absoluteY="87dp"
                 android:layout_gravity="center"/>
 
             <EditText
@@ -104,9 +98,7 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="291dp" />
+                android:text="Name" />
 
             <EditText
                 android:id="@+id/dateedit"
@@ -115,9 +107,7 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="336dp" />
+                android:text="Name" />
 
             <EditText
                 android:id="@+id/thingedit"
@@ -127,8 +117,6 @@
                 android:ems="10"
                 android:inputType="text"
                 android:text="Name"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="381dp"
                 />
 
             <EditText
@@ -138,18 +126,14 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
-                tools:layout_editor_absoluteX="28dp"
-                tools:layout_editor_absoluteY="445dp" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="358dp"
                 android:layout_height="70dp"
                 android:text="[ 앱 이용규칙 ]"
-                android:layout_gravity="center"
-                tools:layout_editor_absoluteX="28dp"
-                tools:layout_editor_absoluteY="496dp" />
+                android:layout_gravity="center" />
 
             <Button
                 android:id="@+id/button"
@@ -159,8 +143,7 @@
                 android:text="게시글 작성 완료"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
-                tools:layout_editor_absoluteX="120dp"
-                tools:layout_editor_absoluteY="569dp" />
+                android:layout_marginLeft="10dp"/>
 
         </LinearLayout>
 
