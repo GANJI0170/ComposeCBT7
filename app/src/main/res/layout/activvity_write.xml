@@ -66,7 +66,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/titleedit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -77,7 +77,7 @@
                 tools:layout_editor_absoluteY="0dp" />
 
             <EditText
-                android:id="@+id/editTextText3"
+                android:id="@+id/keywordedit"
                 android:layout_width="wrap_content"
                 android:layout_height="43dp"
                 android:layout_marginLeft="10dp"
@@ -98,24 +98,24 @@
                 android:layout_gravity="center"/>
 
             <EditText
-                android:id="@+id/placeedit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Name"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="291dp" />
-
-            <EditText
                 android:id="@+id/dateedit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="분실/습득 날짜"
+                tools:layout_editor_absoluteX="116dp"
+                tools:layout_editor_absoluteY="291dp" />
+
+            <EditText
+                android:id="@+id/placeedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="분실/습득 장소"
                 tools:layout_editor_absoluteX="116dp"
                 tools:layout_editor_absoluteY="336dp" />
 
@@ -126,19 +126,29 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="분실/습득 물건"
                 tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="381dp"
-                />
+                tools:layout_editor_absoluteY="381dp" />
 
             <EditText
-                android:id="@+id/pointedit"
+                android:id="@+id/featureedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="분실/습득 특징"
+                tools:layout_editor_absoluteX="116dp"
+                tools:layout_editor_absoluteY="381dp" />
+
+            <EditText
+                android:id="@+id/detailedit"
                 android:layout_width="357dp"
                 android:layout_height="51dp"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="분실/습득물 상세내용"
                 tools:layout_editor_absoluteX="28dp"
                 tools:layout_editor_absoluteY="445dp" />
 
