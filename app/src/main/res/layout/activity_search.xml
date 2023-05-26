@@ -13,29 +13,40 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-<!--            스피너 추가-->
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.2"
+                android:entries="@array/searcharray"/>
 
             <EditText
                 android:id="@+id/keyword"
-                android:layout_width="363dp"
-                android:layout_height="48dp"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
                 android:layout_gravity="left"
                 android:background="#22CB88"
-                android:ems="10"
                 android:hint=" 검색어를 입력해주세요"
                 android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/btn1"
-                android:layout_width="match_parent"
+                android:layout_width="0sp"
                 android:layout_height="match_parent"
-                android:text="찾" />
+                android:layout_weight="1.5"
+                android:text="검색" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#BDBDBD"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,29 +58,27 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="           검색결과"
+                    android:textSize="25sp"
+                    android:id="@+id/test11"
+                    android:gravity="center" />
+
                 <Button
                     android:id="@+id/btnimage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="이미지" />
-
-                <Button
-                    android:id="@+id/btnkeyword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="키워드" />
-
             </LinearLayout>
 
-            <TextView
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="검색결과"
-                android:textSize="25sp"
-                android:id="@+id/test11"
-                android:gravity="center" />
+                android:layout_height="2sp"
+                android:background="#BDBDBD"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/resultrecyclerView"

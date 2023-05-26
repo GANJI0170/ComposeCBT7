@@ -9,13 +9,17 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookandroid.cbt7.database.articlefoundList;
+import com.cookandroid.cbt7.database.articlelostList;
 import com.cookandroid.cbt7.database.foundAdaptor;
+import com.cookandroid.cbt7.database.lostAdaptor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,9 +50,12 @@ public class SearchActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private ArrayList<articlefoundList> arrayListfound;
+    private ArrayList<articlefoundList> foundarrayList;
+    private ArrayList<articlelostList> lostarrayList;
     private RecyclerView resultrecyclerView;
     private RecyclerView.Adapter adapter;
+    private String spinnerStr = "";
+    private Query resultQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,19 @@ public class SearchActivity extends AppCompatActivity {
 
         mSearch = new LostAndFoundSearch(this);
         mSearch.loadKeywords();
+
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerStr = parent.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 //        //사전 정의
 //        FileOutputStream fos;
@@ -85,6 +105,10 @@ public class SearchActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
+        resultrecyclerView = findViewById(R.id.resultrecyclerView);
+        foundarrayList = new ArrayList<>();
+        lostarrayList = new ArrayList<>();
+
         EditText keyword = findViewById(R.id.keyword);
         Button btn1 = findViewById(R.id.btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -95,30 +119,51 @@ public class SearchActivity extends AppCompatActivity {
                 // 검색 결과를 어떻게 처리할지 여기에 작성
                 // 결과값과 게시판 키워드 비교로 결과 출력 해줘야한다.
 
-                //결과값 리사이클러뷰에 출력
-                resultrecyclerView = findViewById(R.id.resultrecyclerView);
-                arrayListfound = new ArrayList<>();
-                databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
-                Query resultQuery = databaseReference.orderByChild("found_keyword").equalTo("지갑, 습득물");
-                resultQuery.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        arrayListfound.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                            arrayListfound.add(articlefoundList);
-                        }
-                        adapter.notifyDataSetChanged();
-                        System.out.println(arrayListfound.toString());
-                    }
+                switch (spinnerStr) {
+                    case "분실물":
+                        databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
+                        resultQuery = databaseReference.orderByChild("lost_keyword").startAt(result).endAt(result + "\uf8ff");
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("SearchActivity", String.valueOf(error.toException()));
-                    }
-                });
-                adapter = new foundAdaptor(arrayListfound, getApplicationContext());
-                resultrecyclerView.setAdapter(adapter);
+                        resultQuery.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                lostarrayList.clear();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
+                                    lostarrayList.add(articlelostList);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("SearchActivity", String.valueOf(error.toException()));
+                            }
+                        });
+                        adapter = new lostAdaptor(lostarrayList, getApplicationContext());
+                        resultrecyclerView.setAdapter(adapter);
+                        break;
+                    case "습득물":
+                        databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
+                        resultQuery = databaseReference.orderByChild("found_keyword").startAt(result).endAt(result + "\uf8ff");
+                        resultQuery.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                foundarrayList.clear();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
+                                    foundarrayList.add(articlefoundList);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("SearchActivity", String.valueOf(error.toException()));
+                            }
+                        });
+                        adapter = new foundAdaptor(foundarrayList, getApplicationContext());
+                        resultrecyclerView.setAdapter(adapter);
+                        break;
+                }
             }
         });
     }

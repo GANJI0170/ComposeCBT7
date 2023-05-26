@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="searcharray">
+        <item>분실물</item>
+        <item>습득물</item>
+    </string-array>
+</resources>
