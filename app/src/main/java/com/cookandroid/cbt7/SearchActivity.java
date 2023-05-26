@@ -1,5 +1,7 @@
 package com.cookandroid.cbt7;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cookandroid.cbt7.database.articlefoundList;
+import com.cookandroid.cbt7.database.foundAdaptor;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +43,12 @@ import kr.co.shineware.nlp.komoran.model.Token;
 public class SearchActivity extends AppCompatActivity {
 
     private LostAndFoundSearch mSearch;
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private ArrayList<articlefoundList> arrayListfound;
+    private RecyclerView resultrecyclerView;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,26 +64,26 @@ public class SearchActivity extends AppCompatActivity {
         mSearch = new LostAndFoundSearch(this);
         mSearch.loadKeywords();
 
-        //사전 정의
-        FileOutputStream fos;
-        String strFileContents = "제트플립\tNNP\n" + "제트 플립\tNNP\n" + "갤럭시노트10\tNNP\n"
-                +"아이폰13프로\tNNP\n"+"갤럭시S20울트라\tNNP\n"+"갤럭시S23울트라\tNNP\n"
-                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
-                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
-                +"거꾸로우산\tNNP\n"+"자동우산\tNNP\n"+"크로스백\tNNP\n"+"여행가방\tNNP\n"
-                +"백팩\tNNP\n"+"토트백\tNNP\n"+"보스턴백\tNNP\n"+"베이스볼 캡\tNNP\n"
-                +"비니\tNNP\n"+"페도라\tNNP\n"+"버킷햇\tNNP\n"+"트루퍼햇\tNNP\n"
-                +"장지갑\tNNP\n"+"반지갑\tNNP\n"+"동전지갑\tNNP\n";
-        try {
-            fos = openFileOutput("userDic.txt", MODE_PRIVATE);
-            fos.write(strFileContents.getBytes(StandardCharsets.UTF_8));
-            fos.close();
-            System.out.println("성공");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        //사전 정의
+//        FileOutputStream fos;
+//        String strFileContents = "제트플립\tNNP\n" + "제트 플립\tNNP\n" + "갤럭시노트10\tNNP\n"
+//                +"아이폰13프로\tNNP\n"+"갤럭시S20울트라\tNNP\n"+"갤럭시S23울트라\tNNP\n"
+//                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
+//                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
+//                +"거꾸로우산\tNNP\n"+"자동우산\tNNP\n"+"크로스백\tNNP\n"+"여행가방\tNNP\n"
+//                +"백팩\tNNP\n"+"토트백\tNNP\n"+"보스턴백\tNNP\n"+"베이스볼 캡\tNNP\n"
+//                +"비니\tNNP\n"+"페도라\tNNP\n"+"버킷햇\tNNP\n"+"트루퍼햇\tNNP\n"
+//                +"장지갑\tNNP\n"+"반지갑\tNNP\n"+"동전지갑\tNNP\n";
+//        try {
+//            fos = openFileOutput("userDic.txt", MODE_PRIVATE);
+//            fos.write(strFileContents.getBytes(StandardCharsets.UTF_8));
+//            fos.close();
+//            System.out.println("성공");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         EditText keyword = findViewById(R.id.keyword);
         Button btn1 = findViewById(R.id.btn1);
@@ -76,6 +94,31 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 // 검색 결과를 어떻게 처리할지 여기에 작성
                 // 결과값과 게시판 키워드 비교로 결과 출력 해줘야한다.
+
+                //결과값 리사이클러뷰에 출력
+                resultrecyclerView = findViewById(R.id.resultrecyclerView);
+                arrayListfound = new ArrayList<>();
+                databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
+                Query resultQuery = databaseReference.orderByChild("found_keyword").equalTo("지갑, 습득물");
+                resultQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        arrayListfound.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
+                            arrayListfound.add(articlefoundList);
+                        }
+                        adapter.notifyDataSetChanged();
+                        System.out.println(arrayListfound.toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("SearchActivity", String.valueOf(error.toException()));
+                    }
+                });
+                adapter = new foundAdaptor(arrayListfound, getApplicationContext());
+                resultrecyclerView.setAdapter(adapter);
             }
         });
     }

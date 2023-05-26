@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+<!--            스피너 추가-->
+
             <EditText
                 android:id="@+id/keyword"
                 android:layout_width="363dp"
@@ -68,6 +70,15 @@
                 android:textSize="25sp"
                 android:id="@+id/test11"
                 android:gravity="center" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/resultrecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10sp"
+                android:scrollbars="vertical"
+                android:scrollbarFadeDuration="0"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         </LinearLayout>
 
