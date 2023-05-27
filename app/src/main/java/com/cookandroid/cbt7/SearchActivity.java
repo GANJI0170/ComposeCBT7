@@ -122,17 +122,18 @@ public class SearchActivity extends AppCompatActivity {
                 switch (spinnerStr) {
                     case "분실물":
                         databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
-                        resultQuery = databaseReference.orderByChild("lost_keyword").startAt(result).endAt(result + "\uf8ff");
-
-                        resultQuery.addValueEventListener(new ValueEventListener() {
+                        databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 lostarrayList.clear();
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                                    lostarrayList.add(articlelostList);
+                                    String str = dataSnapshot.child("lost_keyword").getValue(String.class);
+                                    if(str.contains(result)) {
+                                        articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
+                                        lostarrayList.add(articlelostList);
+                                    }
+                                    adapter.notifyDataSetChanged();
                                 }
-                                adapter.notifyDataSetChanged();
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -144,16 +145,18 @@ public class SearchActivity extends AppCompatActivity {
                         break;
                     case "습득물":
                         databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
-                        resultQuery = databaseReference.orderByChild("found_keyword").startAt(result).endAt(result + "\uf8ff");
-                        resultQuery.addValueEventListener(new ValueEventListener() {
+                        databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 foundarrayList.clear();
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                                    foundarrayList.add(articlefoundList);
+                                    String str = dataSnapshot.child("found_keyword").getValue(String.class);
+                                    if(str.contains(result)) {
+                                        articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
+                                        foundarrayList.add(articlefoundList);
+                                    }
+                                    adapter.notifyDataSetChanged();
                                 }
-                                adapter.notifyDataSetChanged();
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
