@@ -23,13 +23,13 @@ public class ProfileActivity extends AppCompatActivity {
         TextView test = (TextView) findViewById(R.id.test);
         test.setText("내 정보 페이지입니다.");
 
-
-        testbtn = (Button) findViewById(R.id.testbtn);
-        testbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                databaseReference.child("found_article").push().child("found_title").setValue("데이터베이스 저장 테스트");
-            }
-        });
+//        데이터베이스 데이터 저장 테스트용
+//        testbtn = (Button) findViewById(R.id.testbtn);
+//        testbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                databaseReference.child("found_article").push().child("found_title").setValue("데이터베이스 저장 테스트");
+//            }
+//        });
     }
 }

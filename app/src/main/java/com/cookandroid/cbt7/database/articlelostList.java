@@ -7,6 +7,7 @@ public class articlelostList {
     private String lost_id;
     private String lost_post_date;
     private String lost_hits;
+    private String lost_number;
 
     public articlelostList(){}
 
@@ -51,4 +52,6 @@ public class articlelostList {
     public void setLost_hits() {
         this.lost_hits = lost_hits;
     }
+    public String getLost_number(){return lost_number;}
+    public void setLost_number(){this.lost_number = lost_number;}
 }

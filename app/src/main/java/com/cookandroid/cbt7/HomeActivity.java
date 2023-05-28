@@ -10,9 +10,6 @@ import com.cookandroid.cbt7.database.articlefoundList;
 import com.cookandroid.cbt7.database.articlelostList;
 import com.cookandroid.cbt7.database.foundAdaptor;
 import com.cookandroid.cbt7.database.lostAdaptor;
-import com.cookandroid.cbt7.navigation.fragment_home;
-import com.cookandroid.cbt7.navigation.fragment_myarticle;
-import com.cookandroid.cbt7.navigation.fragment_write;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,16 +53,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-//      bottomNavigationView 설정
-//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.framelayout1);
-//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.menu_bottom_navigation);
-//        bottomNavigationView.setSelectedItemId(R.id.menuhome);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(listener);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentHome).commit();
-//
-//        l = (LinearLayout) findViewById(R.id.board);
-//        l.setVisibility(View.GONE);
 
 //      탭호스트 설정
         TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);

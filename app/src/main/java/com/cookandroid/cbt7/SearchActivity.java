@@ -24,7 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
@@ -47,15 +46,12 @@ import kr.co.shineware.nlp.komoran.model.Token;
 public class SearchActivity extends AppCompatActivity {
 
     private LostAndFoundSearch mSearch;
-
-    private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private ArrayList<articlefoundList> foundarrayList;
     private ArrayList<articlelostList> lostarrayList;
     private RecyclerView resultrecyclerView;
     private RecyclerView.Adapter adapter;
     private String spinnerStr = "";
-    private Query resultQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +105,12 @@ public class SearchActivity extends AppCompatActivity {
         foundarrayList = new ArrayList<>();
         lostarrayList = new ArrayList<>();
 
-        EditText keyword = findViewById(R.id.keyword);
         Button btn1 = findViewById(R.id.btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = mSearch.searchKeyword(keyword.getText().toString());
+                String result = mSearch.searchKeyword(editText.getText().toString());
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                // 검색 결과를 어떻게 처리할지 여기에 작성
-                // 결과값과 게시판 키워드 비교로 결과 출력 해줘야한다.
 
                 switch (spinnerStr) {
                     case "분실물":
@@ -169,6 +162,9 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 }
 

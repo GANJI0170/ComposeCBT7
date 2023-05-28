@@ -7,6 +7,7 @@ public class articlefoundList {
     private String found_id;
     private String found_post_date;
     private String found_hits;
+    private String found_number;
 
     public articlefoundList(){}
 
@@ -51,4 +52,7 @@ public class articlefoundList {
     public void setFound_hits() {
         this.found_hits = found_hits;
     }
+    public String getFound_number(){return found_number;}
+    public void setFound_number(){this.found_number = found_number;}
+
 }

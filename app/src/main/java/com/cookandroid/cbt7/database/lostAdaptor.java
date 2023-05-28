@@ -1,6 +1,9 @@
 package com.cookandroid.cbt7.database;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cookandroid.cbt7.LookupActivity;
 import com.cookandroid.cbt7.R;
 
 import java.util.ArrayList;
@@ -50,6 +54,19 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         holder.lost_id.setText(arrayList.get(position).getLost_id());
         holder.lost_post_date.setText(arrayList.get(position).getLost_post_date());
         holder.lost_hits.setText(arrayList.get(position).getLost_hits());
+        holder.lost_num.setText(arrayList.get(position).getLost_number());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String articleNum = holder.lost_num.getText().toString();
+
+                Intent intent = new Intent(context, LookupActivity.class);
+                intent.putExtra("boardType", "분실물 게시판");
+                intent.putExtra("articleNum", articleNum);
+                context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     @Override
@@ -64,6 +81,7 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         TextView lost_id;
         TextView lost_post_date;
         TextView lost_hits;
+        TextView lost_num;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +91,7 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
             this.lost_id = itemView.findViewById(R.id.board_id);
             this.lost_post_date = itemView.findViewById(R.id.board_post_date);
             this.lost_hits = itemView.findViewById(R.id.board_hits);
+            this.lost_num = itemView.findViewById(R.id.board_Num);
         }
     }
 }

@@ -71,8 +71,9 @@
 
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/board_Num"
+            android:layout_width="0sp"
+            android:layout_height="0sp"/>
     </LinearLayout>
-
-
-
 </LinearLayout>

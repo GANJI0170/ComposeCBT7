@@ -1,6 +1,9 @@
 package com.cookandroid.cbt7.database;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cookandroid.cbt7.LookupActivity;
 import com.cookandroid.cbt7.R;
 
 import java.util.ArrayList;
@@ -50,6 +54,19 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
         holder.found_id.setText(arrayList.get(position).getFound_id());
         holder.found_post_date.setText(arrayList.get(position).getFound_post_date());
         holder.found_hits.setText(arrayList.get(position).getFound_hits());
+        holder.found_num.setText(arrayList.get(position).getFound_number());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String articleNum = holder.found_num.getText().toString();
+
+                Intent intent = new Intent(context, LookupActivity.class);
+                intent.putExtra("boardType", "습득물 게시판");
+                intent.putExtra("articleNum", articleNum);
+                context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     @Override
@@ -64,6 +81,7 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
         TextView found_id;
         TextView found_post_date;
         TextView found_hits;
+        TextView found_num;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +91,7 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
             this.found_id = itemView.findViewById(R.id.board_id);
             this.found_post_date = itemView.findViewById(R.id.board_post_date);
             this.found_hits = itemView.findViewById(R.id.board_hits);
+            this.found_num = itemView.findViewById(R.id.board_Num);
         }
     }
 }
