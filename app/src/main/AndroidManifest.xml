@@ -24,7 +24,10 @@
             android:name=".WriteActivity"/>
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
+            android:exported="true" />
+        <activity
+            android:name=".ChatListActivity"
+            android:exported="true" />
         <activity
             android:name=".SearchActivity"
             android:exported="true" />

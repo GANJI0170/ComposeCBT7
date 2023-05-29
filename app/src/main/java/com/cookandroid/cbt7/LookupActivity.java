@@ -3,14 +3,20 @@ package com.cookandroid.cbt7;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.cookandroid.cbt7.database.ChatRoom;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +30,7 @@ public class LookupActivity extends AppCompatActivity {
     private TextView boardType, titleText, keywordText, dateText, placeText, thingText, featureText, detailText;
     private ImageView articleImage;
     private String board, articleNum, num;
+    private Button report, chat;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,16 @@ public class LookupActivity extends AppCompatActivity {
         featureText = (TextView) findViewById(R.id.featureText);
         detailText = (TextView) findViewById(R.id.detailText);
         articleImage = (ImageView) findViewById(R.id.articleImage);
+        report = (Button) findViewById(R.id.report);
+        chat = (Button) findViewById(R.id.chat);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createChatRoom();
+
+            }
+        });
+
 
         switch (board) {
             case "분실물 게시판":
@@ -105,5 +122,43 @@ public class LookupActivity extends AppCompatActivity {
         }
 
 
+    }
+    private void createChatRoom() {
+        // 채팅방 생성 및 파이어베이스에 저장하는 로직 작성
+        // 파이어베이스 Realtime Database 또는 Firestore를 사용할 수 있습니다.
+        // 아래 예시 코드에서는 Realtime Database를 사용합니다.
+
+        // 채팅방 정보 생성
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.setName("Chat Room 1");
+        chatRoom.setMember("seok1234");
+        chatRoom.setMessage("hello");
+        chatRoom.setDate("2018.05.28");
+
+        // 파이어베이스 데이터베이스 인스턴스 가져오기
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("chat_rooms"); // 채팅방 데이터가 저장될 노드 경로
+
+        // 채팅방 데이터를 파이어베이스에 저장
+        String chatRoomId = reference.push().getKey(); // 채팅방에 대한 고유한 키 생성
+        reference.child(chatRoomId).setValue(chatRoom)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // 채팅방 생성 및 저장 성공
+                        Toast.makeText(LookupActivity.this, "Chat room created successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LookupActivity.this, ChatActivity.class);
+                        intent.putExtra("chatRoomId", chatRoomId);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // 채팅방 생성 및 저장 실패
+                        Toast.makeText(LookupActivity.this, "Failed to create chat room", Toast.LENGTH_SHORT).show();
+                        Log.e("Firebase", "Failed to create chat room", e);
+                    }
+                });
     }
 }

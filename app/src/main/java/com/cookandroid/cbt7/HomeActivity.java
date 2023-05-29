@@ -1,13 +1,17 @@
 package com.cookandroid.cbt7;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cookandroid.cbt7.database.CustomAdapter;
 import com.cookandroid.cbt7.database.articlefoundList;
 import com.cookandroid.cbt7.database.articlelostList;
+import com.cookandroid.cbt7.database.chatList;
 import com.cookandroid.cbt7.database.foundAdaptor;
 import com.cookandroid.cbt7.database.lostAdaptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +37,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView1, recyclerView2, recyclerView3;
+    private RecyclerView recyclerView1, recyclerView2;
     private RecyclerView.Adapter adapter1, adapter2;
     private RecyclerView.LayoutManager layoutManager1, layoutManager2;
     private ArrayList<articlefoundList> arrayListfound;
@@ -107,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         btnchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), ChatActivity.class);
+                Intent in = new Intent(getApplicationContext(), ChatListActivity.class);
                 startActivity(in);
             }
         });
@@ -212,6 +216,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView1.setAdapter(adapter1);
         recyclerView2.setAdapter(adapter2);
     }
+    //채팅방 연동
 
 
 //    private BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
