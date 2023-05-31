@@ -27,6 +27,7 @@ import org.w3c.dom.Text;
 
 public class LookupActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
+    private TextView textdate, textplace, textthing, textfeature, textdetail;
     private TextView boardType, titleText, keywordText, dateText, placeText, thingText, featureText, detailText;
     private ImageView articleImage;
     private String board, articleNum, num;
@@ -42,6 +43,12 @@ public class LookupActivity extends AppCompatActivity {
 
         boardType = (TextView) findViewById(R.id.board_type);
         boardType.setText(board);
+
+        textdate = (TextView) findViewById(R.id.textdate);
+        textplace = (TextView) findViewById(R.id.textplace);
+        textthing = (TextView) findViewById(R.id.textthing);
+        textfeature = (TextView) findViewById(R.id.textfeature);
+        textdetail = (TextView) findViewById(R.id.textdetail);
 
         titleText = (TextView) findViewById(R.id.titleText);
         keywordText = (TextView) findViewById(R.id.keywordText);
@@ -92,6 +99,11 @@ public class LookupActivity extends AppCompatActivity {
                 });
                 break;
             case "습득물 게시판":
+                textdate.setText("습득 날짜 : ");
+                textplace.setText("습득 장소 : ");
+                textthing.setText("습득 물건 : ");
+                textfeature.setText("습득물 특징 : ");
+                textdetail.setText("습득물 상세내용 : ");
                 databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override

@@ -132,27 +132,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-//        BTNfound = (Button) findViewById(R.id.BTNfound);
-//        BTNlost = (Button) findViewById(R.id.BTNlost);
-//
-//        BTNfound.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                callFragment(1);
-//
-//            }
-//        });
-//        BTNlost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                callFragment(2);
-//
-//            }
-//        });
-
     }
 
     private void boardDatabase() {
@@ -219,97 +198,6 @@ public class HomeActivity extends AppCompatActivity {
     //채팅방 연동
 
 
-//    private BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            l = (LinearLayout) findViewById(R.id.board);
-//            switch (item.getItemId()) {
-//                    case R.id.menuwriting:
-//                        l.setVisibility(View.GONE);
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentWrite).commit();
-//                        return true;
-//                    case R.id.menuhome:
-//                        l.setVisibility(View.GONE);
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentHome).commit();
-//                        return true;
-//                    case R.id.menulistofarticles:
-//                        l.setVisibility(View.GONE);
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentMyarticle).commit();
-//                        return true;
-//            }
-//            return false;
-//        }
-//    };
-//
-//    private void callFragment(int n) {
-//        l = (LinearLayout) findViewById(R.id.board);
-//        switch (n) {
-//            case 1:
-////                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentboard).commit();
-//                l.setVisibility(View.VISIBLE);
-//                recyclerView1 = findViewById(R.id.boardrecyclerView);
-//                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
-//                recyclerView1.addItemDecoration(dividerItemDecoration);
-//                recyclerView1.setHasFixedSize(true);
-//                layoutManager1 = new LinearLayoutManager(this);
-//                recyclerView1.setLayoutManager(layoutManager1);
-//                arrayListlost = new ArrayList<>(); //articleList 객체를 어댑터 쪽으로 담을 arrayList
-//                database = FirebaseDatabase.getInstance(); //파이어베이스 연동
-//
-//
-//                databaseReference1 = database.getReference("lost_article"); // DB 테이블 연결
-//                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        //파이어베이스 데이터를 받아오는 곳
-//                        arrayListlost.clear(); //기존 배열 초기화
-//                        for (DataSnapshot snapshot1 : snapshot.getChildren()) { //반복문으로 데이터 리스트 추출
-//                            articlelostList articlelostList = snapshot1.getValue(articlelostList.class); //arrayList 객체에 데이터 담기
-//                            arrayListlost.add(articlelostList);
-//                        }
-//                        adapter1.notifyDataSetChanged(); //리스트 저장 및 새로고침
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        Log.e("LoginActivity", String.valueOf(error.toException()));
-//                    }
-//                });
-//                adapter1 = new lostAdaptor(arrayListlost, this);
-//                recyclerView1.setAdapter(adapter1);
-//                break;
-//            case 2:
-////                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragmentboard).commit();
-//                l.setVisibility(View.VISIBLE);
-//                recyclerView2 = findViewById(R.id.boardrecyclerView);
-//                DividerItemDecoration dividerItemDecoration1 = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
-//                recyclerView2.addItemDecoration(dividerItemDecoration1);
-//                recyclerView2.setHasFixedSize(true);
-//                layoutManager2 = new LinearLayoutManager(this);
-//                recyclerView2.setLayoutManager(layoutManager2);
-//                arrayListfound = new ArrayList<>();
-//
-//                databaseReference2 = database.getReference("found_article");
-//                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        arrayListfound.clear();
-//                        for (DataSnapshot snapshot1 : snapshot.getChildren()) { //반복문으로 데이터 리스트 추출
-//                            articlefoundList articlefoundList = snapshot1.getValue(articlefoundList.class); //arrayList 객체에 데이터 담기
-//                            arrayListfound.add(articlefoundList);
-//                        }
-//                        adapter2.notifyDataSetChanged(); //리스트 저장 및 새로고침
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        Log.e("LoginActivity", String.valueOf(error.toException()));
-//                    }
-//                });
-//                adapter2 = new foundAdaptor(arrayListfound, this);
-//                recyclerView2.setAdapter(adapter2);
-//                break;
-//        }
-//    }
+
 }
 

@@ -71,9 +71,10 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="분실한 날짜 : "
+                android:text="분실 날짜 : "
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
@@ -89,6 +90,7 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textplace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실 장소 : "
@@ -107,6 +109,7 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textthing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실 물건 : "
@@ -125,6 +128,7 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textfeature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실물 특징 : "
@@ -144,6 +148,7 @@
             android:orientation="vertical"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textdetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실물 상세내용 : "

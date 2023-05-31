@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private LostAndFoundSearch mSearch;
     private DatabaseReference databaseReference;
-    private ArrayList<articlefoundList> foundarrayList;
-    private ArrayList<articlelostList> lostarrayList;
+    private ArrayList<articlefoundList> foundarrayList, foundarrayList2;
+    private ArrayList<articlelostList> lostarrayList, lostarrayList2;
     private RecyclerView resultrecyclerView;
     private RecyclerView.Adapter adapter;
     private String spinnerStr = "";
@@ -103,13 +104,16 @@ public class SearchActivity extends AppCompatActivity {
 
         resultrecyclerView = findViewById(R.id.resultrecyclerView);
         foundarrayList = new ArrayList<>();
+        foundarrayList2 = new ArrayList<>();
         lostarrayList = new ArrayList<>();
+        lostarrayList2 = new ArrayList<>();
 
         Button btn1 = findViewById(R.id.btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String result = mSearch.searchKeyword(editText.getText().toString());
+                String resultoriginal = editText.getText().toString();
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                 switch (spinnerStr) {
@@ -119,14 +123,21 @@ public class SearchActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 lostarrayList.clear();
+                                lostarrayList2.clear();
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     String str = dataSnapshot.child("lost_keyword").getValue(String.class);
                                     if(str.contains(result)) {
-                                        articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                                        lostarrayList.add(articlelostList);
+                                        if(str.contains(resultoriginal)) {
+                                            articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
+                                            lostarrayList.add(articlelostList);
+                                        }else {
+                                            articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
+                                            lostarrayList2.add(articlelostList);
+                                        }
                                     }
                                     adapter.notifyDataSetChanged();
                                 }
+                                lostarrayList.addAll(lostarrayList2);
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -142,14 +153,22 @@ public class SearchActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 foundarrayList.clear();
+                                foundarrayList2.clear();
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     String str = dataSnapshot.child("found_keyword").getValue(String.class);
                                     if(str.contains(result)) {
-                                        articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                                        foundarrayList.add(articlefoundList);
+                                        if(str.contains(resultoriginal)) {
+                                            articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
+                                            foundarrayList.add(articlefoundList);
+                                        }else {
+                                            articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
+                                            foundarrayList2.add(articlefoundList);
+                                        }
                                     }
                                     adapter.notifyDataSetChanged();
                                 }
+                                foundarrayList.addAll(foundarrayList2);
+//                                Collections.reverse(foundarrayList);
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -213,7 +232,7 @@ class LostAndFoundSearch {
         if (mDictionary.containsKey(keyword)) {
             return mDictionary.get(keyword);
         } else {
-            return "\"" + keyword + "\"";
+            return keyword;
             //검색어 없을시 그대로 검색되는 처리해줘야함.
         }
     }
