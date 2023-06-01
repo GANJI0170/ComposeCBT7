@@ -46,13 +46,6 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference databaseReference1, databaseReference2;
     private Button btnSearch, btnwrite, btnmyarticle, btnchat, btnalarm, btnprofile;
 
-//    private fragment_home fragmentHome = new fragment_home();
-//    private fragment_myarticle fragmentMyarticle = new fragment_myarticle();
-//    private fragment_write fragmentWrite = new fragment_write();
-//    private Button BTNlost, BTNfound;
-//    private LinearLayout l;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,8 +183,8 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("LoginActivity", String.valueOf(error.toException()));
             }
         });
-        adapter1 = new lostAdaptor(arrayListlost, this);
-        adapter2 = new foundAdaptor(arrayListfound, this);
+        adapter1 = new lostAdaptor(arrayListlost, this, 1);
+        adapter2 = new foundAdaptor(arrayListfound, this, 1);
         recyclerView1.setAdapter(adapter1);
         recyclerView2.setAdapter(adapter2);
     }

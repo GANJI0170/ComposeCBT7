@@ -9,7 +9,9 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Dimension;
@@ -25,10 +27,12 @@ import java.util.ArrayList;
 public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHolder> {
     private ArrayList<articlelostList> arrayList;
     private Context context;
+    private int n;
 
-    public lostAdaptor(ArrayList<articlelostList> arrayList, Context context) {
+    public lostAdaptor(ArrayList<articlelostList> arrayList, Context context, int n) {
         this.arrayList = arrayList;
         this.context = context;
+        this.n = n;
     }
 
     @NonNull
@@ -67,6 +71,9 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
                 context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         });
+        if(n==0) {
+            holder.btnlatouy.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -82,6 +89,8 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         TextView lost_post_date;
         TextView lost_hits;
         TextView lost_num;
+        Button articledelete, articleretouch;
+        LinearLayout btnlatouy;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +101,10 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
             this.lost_post_date = itemView.findViewById(R.id.board_post_date);
             this.lost_hits = itemView.findViewById(R.id.board_hits);
             this.lost_num = itemView.findViewById(R.id.board_Num);
+
+            this.btnlatouy = itemView.findViewById(R.id.btnlatouy);
+            this.articledelete = itemView.findViewById(R.id.articledelete);
+            this.articleretouch = itemView.findViewById(R.id.articleretouch);
         }
     }
 }

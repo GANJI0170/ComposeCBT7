@@ -1,6 +1,8 @@
 package com.cookandroid.cbt7;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,36 +55,17 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<articlelostList> lostarrayList, lostarrayList2;
     private RecyclerView resultrecyclerView;
     private RecyclerView.Adapter adapter;
-    private String spinnerStr = "";
+    private String radioStr = "최신순";
+    private String spinnerStr, resultoriginal, result;
+    private RadioGroup resultradiogroup;
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Intent intent = getIntent();
-        String searchText = intent.getStringExtra("searchText");
-
-        EditText editText = (EditText) findViewById(R.id.keyword);
-        editText.setText(searchText);
-
-        mSearch = new LostAndFoundSearch(this);
-        mSearch.loadKeywords();
-
-
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerStr = parent.getItemAtPosition(position).toString();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-//        //사전 정의
+        //        //사전 정의
 //        FileOutputStream fos;
 //        String strFileContents = "제트플립\tNNP\n" + "제트 플립\tNNP\n" + "갤럭시노트10\tNNP\n"
 //                +"아이폰13프로\tNNP\n"+"갤럭시S20울트라\tNNP\n"+"갤럭시S23울트라\tNNP\n"
@@ -102,7 +86,47 @@ public class SearchActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
+        Intent intent = getIntent();
+        String searchText = intent.getStringExtra("searchText");
+
+        editText = (EditText) findViewById(R.id.keyword);
+        editText.setText(searchText);
+
+        mSearch = new LostAndFoundSearch(this);
+        mSearch.loadKeywords();
+
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerStr = parent.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        resultradiogroup =(RadioGroup) findViewById(R.id.resultradiogroup);
+        resultradiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.newestradiobtn:
+                        radioStr = "최신순";
+                        break;
+                    case R.id.oldradiobtn:
+                        radioStr = "오래된순";
+                        break;
+                }
+            }
+        });
+
         resultrecyclerView = findViewById(R.id.resultrecyclerView);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
+        resultrecyclerView.addItemDecoration(dividerItemDecoration);
+        resultrecyclerView.setHasFixedSize(true);
         foundarrayList = new ArrayList<>();
         foundarrayList2 = new ArrayList<>();
         lostarrayList = new ArrayList<>();
@@ -112,80 +136,93 @@ public class SearchActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = mSearch.searchKeyword(editText.getText().toString());
-                String resultoriginal = editText.getText().toString();
+                result = mSearch.searchKeyword(editText.getText().toString());
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                 switch (spinnerStr) {
                     case "분실물":
-                        databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                lostarrayList.clear();
-                                lostarrayList2.clear();
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    String str = dataSnapshot.child("lost_keyword").getValue(String.class);
-                                    if(str.contains(result)) {
-                                        if(str.contains(resultoriginal)) {
-                                            articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                                            lostarrayList.add(articlelostList);
-                                        }else {
-                                            articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                                            lostarrayList2.add(articlelostList);
-                                        }
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                }
-                                lostarrayList.addAll(lostarrayList2);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.e("SearchActivity", String.valueOf(error.toException()));
-                            }
-                        });
-                        adapter = new lostAdaptor(lostarrayList, getApplicationContext());
-                        resultrecyclerView.setAdapter(adapter);
+                        lostdatabase();
                         break;
                     case "습득물":
-                        databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                foundarrayList.clear();
-                                foundarrayList2.clear();
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    String str = dataSnapshot.child("found_keyword").getValue(String.class);
-                                    if(str.contains(result)) {
-                                        if(str.contains(resultoriginal)) {
-                                            articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                                            foundarrayList.add(articlefoundList);
-                                        }else {
-                                            articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                                            foundarrayList2.add(articlefoundList);
-                                        }
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                }
-                                foundarrayList.addAll(foundarrayList2);
-//                                Collections.reverse(foundarrayList);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.e("SearchActivity", String.valueOf(error.toException()));
-                            }
-                        });
-                        adapter = new foundAdaptor(foundarrayList, getApplicationContext());
-                        resultrecyclerView.setAdapter(adapter);
+                        founddatabase();
                         break;
                 }
             }
         });
 
+    }
 
-
+    public void lostdatabase() {
+        resultoriginal = editText.getText().toString();
+        databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lostarrayList.clear();
+                lostarrayList2.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String str = dataSnapshot.child("lost_keyword").getValue(String.class);
+                    if(str.contains(resultoriginal)) {
+                        articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
+                        if(str.contains(result)) {
+                            lostarrayList2.add(articlelostList);
+                        }else {
+                            lostarrayList.add(articlelostList);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+                if (radioStr == "최신순") {
+                    Collections.reverse(lostarrayList);
+                    Collections.reverse(lostarrayList2);
+                }
+                lostarrayList.addAll(lostarrayList2);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("SearchActivity", String.valueOf(error.toException()));
+            }
+        });
+        adapter = new lostAdaptor(lostarrayList, getApplicationContext(), 1);
+        resultrecyclerView.setAdapter(adapter);
+    }
+    public void founddatabase() {
+        resultoriginal = editText.getText().toString();
+        databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foundarrayList.clear();
+                foundarrayList2.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String str = dataSnapshot.child("found_keyword").getValue(String.class);
+                    if(str.contains(resultoriginal)) {
+                        articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
+                        if(str.contains(result)) {
+                            foundarrayList2.add(articlefoundList);
+                        }else {
+                            foundarrayList.add(articlefoundList);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+                if (radioStr == "최신순") {
+                    Collections.reverse(foundarrayList);
+                    Collections.reverse(foundarrayList2);
+                }
+                foundarrayList.addAll(foundarrayList2);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("SearchActivity", String.valueOf(error.toException()));
+            }
+        });
+        adapter = new foundAdaptor(foundarrayList, getApplicationContext(), 1);
+        resultrecyclerView.setAdapter(adapter);
     }
 }
+
+
 
 class LostAndFoundSearch {
     private static final String TAG = "LostAndFoundSearch";
@@ -217,8 +254,11 @@ class LostAndFoundSearch {
                         String keyword = token.getMorph();
                         String meaning = line.replaceAll(keyword, "").trim();
                         mDictionary.put(keyword, meaning);
+                        break;
                     }
                 }
+                System.out.println("한줄 끝");
+                System.out.println(mDictionary);
             }
 
             bufferedReader.close();

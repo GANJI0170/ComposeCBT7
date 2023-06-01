@@ -75,6 +75,28 @@
                     android:text="이미지" />
             </LinearLayout>
 
+            <RadioGroup
+                android:id="@+id/resultradiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:checkedButton="@id/newestradiobtn">
+
+                <RadioButton
+                    android:id="@+id/newestradiobtn"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="최신순"/>
+                <RadioButton
+                    android:id="@+id/oldradiobtn"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="오래된순"/>
+                
+            </RadioGroup>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2sp"

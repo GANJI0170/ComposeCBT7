@@ -9,7 +9,9 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Dimension;
@@ -25,10 +27,12 @@ import java.util.ArrayList;
 public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHolder> {
     private ArrayList<articlefoundList> arrayList;
     private Context context;
+    private int n;
 
-    public foundAdaptor(ArrayList<articlefoundList> arrayList, Context context) {
+    public foundAdaptor(ArrayList<articlefoundList> arrayList, Context context, int n) {
         this.arrayList = arrayList;
         this.context = context;
+        this.n = n;
     }
 
     @NonNull
@@ -67,6 +71,9 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
                 context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         });
+        if(n==0) {
+            holder.btnlatouy.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -82,6 +89,8 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
         TextView found_post_date;
         TextView found_hits;
         TextView found_num;
+        Button articledelete, articleretouch;
+        LinearLayout btnlatouy;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +101,10 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
             this.found_post_date = itemView.findViewById(R.id.board_post_date);
             this.found_hits = itemView.findViewById(R.id.board_hits);
             this.found_num = itemView.findViewById(R.id.board_Num);
+
+            this.btnlatouy = itemView.findViewById(R.id.btnlatouy);
+            this.articledelete = itemView.findViewById(R.id.articledelete);
+            this.articleretouch = itemView.findViewById(R.id.articleretouch);
         }
     }
 }
