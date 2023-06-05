@@ -82,7 +82,7 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/btnlatouy"
+                android:id="@+id/btnlayout"
                 android:layout_width="0sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

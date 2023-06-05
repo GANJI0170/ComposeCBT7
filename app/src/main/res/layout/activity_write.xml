@@ -15,10 +15,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
+            <ImageButton
+                android:id="@+id/backbtn"
+                android:layout_width="0sp"
+                android:layout_height="58sp"
+                android:layout_weight="1"
+                android:src="@drawable/bpbtn"
+                android:background="#22CB88"
+                android:scaleType="centerInside"/>
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
+                android:layout_weight="8"
                 android:layout_gravity="center"
                 android:background="#22CB88"
                 android:text=" 게시글 작성"

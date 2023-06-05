@@ -2,6 +2,8 @@ package com.cookandroid.cbt7;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -65,6 +67,15 @@ public class MyarticleActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton backbtn = (ImageButton) findViewById(R.id.backbtn);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+
+            }
+        });
+
     }
 
     public void lostdatabase() {
@@ -75,7 +86,6 @@ public class MyarticleActivity extends AppCompatActivity {
                 lostarrayList.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     String id = snapshot1.child("lost_id").getValue(String.class);
-                    System.out.println(id);
                     if(id.equals("user001")) {
                         articlelostList articlelostList = snapshot1.getValue(articlelostList.class);
                         lostarrayList.add(articlelostList);
@@ -99,7 +109,6 @@ public class MyarticleActivity extends AppCompatActivity {
                 foundarrayList.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     String id = snapshot1.child("found_id").getValue(String.class);
-                    System.out.println(id);
                     if(id.equals("user001")) {
                         articlefoundList articlefoundList = snapshot1.getValue(articlefoundList.class);
                         foundarrayList.add(articlefoundList);

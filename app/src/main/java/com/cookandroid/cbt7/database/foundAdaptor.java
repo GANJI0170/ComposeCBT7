@@ -72,7 +72,7 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
             }
         });
         if(n==0) {
-            holder.btnlatouy.setVisibility(View.VISIBLE);
+            holder.btnlayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -90,7 +90,7 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
         TextView found_hits;
         TextView found_num;
         Button articledelete, articleretouch;
-        LinearLayout btnlatouy;
+        LinearLayout btnlayout;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,7 +102,7 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
             this.found_hits = itemView.findViewById(R.id.board_hits);
             this.found_num = itemView.findViewById(R.id.board_Num);
 
-            this.btnlatouy = itemView.findViewById(R.id.btnlatouy);
+            this.btnlayout = itemView.findViewById(R.id.btnlayout);
             this.articledelete = itemView.findViewById(R.id.articledelete);
             this.articleretouch = itemView.findViewById(R.id.articleretouch);
         }

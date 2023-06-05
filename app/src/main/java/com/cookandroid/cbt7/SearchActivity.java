@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -89,12 +90,11 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String searchText = intent.getStringExtra("searchText");
 
+        komoranThread thread = new komoranThread();
+        thread.start();
+
         editText = (EditText) findViewById(R.id.keyword);
         editText.setText(searchText);
-
-        mSearch = new LostAndFoundSearch(this);
-        mSearch.loadKeywords();
-
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,16 +150,33 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton backbtn = (ImageButton) findViewById(R.id.backbtn);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+
+            }
+        });
+
+    }
+
+    public class komoranThread extends Thread {
+        @Override
+        public void run() {
+            mSearch = new LostAndFoundSearch(getApplicationContext());
+            mSearch.loadKeywords();
+        }
     }
 
     public void lostdatabase() {
         resultoriginal = editText.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
+        lostarrayList.clear();
+        lostarrayList2.clear();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                lostarrayList.clear();
-                lostarrayList2.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("lost_keyword").getValue(String.class);
                     if(str.contains(resultoriginal)) {
@@ -170,12 +187,12 @@ public class SearchActivity extends AppCompatActivity {
                             lostarrayList.add(articlelostList);
                         }
                     }
-                    adapter.notifyDataSetChanged();
                 }
                 if (radioStr == "최신순") {
                     Collections.reverse(lostarrayList);
                     Collections.reverse(lostarrayList2);
                 }
+                adapter.notifyDataSetChanged();
                 lostarrayList.addAll(lostarrayList2);
             }
             @Override
@@ -189,11 +206,11 @@ public class SearchActivity extends AppCompatActivity {
     public void founddatabase() {
         resultoriginal = editText.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
+        foundarrayList.clear();
+        foundarrayList2.clear();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foundarrayList.clear();
-                foundarrayList2.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("found_keyword").getValue(String.class);
                     if(str.contains(resultoriginal)) {
@@ -204,12 +221,12 @@ public class SearchActivity extends AppCompatActivity {
                             foundarrayList.add(articlefoundList);
                         }
                     }
-                    adapter.notifyDataSetChanged();
                 }
                 if (radioStr == "최신순") {
                     Collections.reverse(foundarrayList);
                     Collections.reverse(foundarrayList2);
                 }
+                adapter.notifyDataSetChanged();
                 foundarrayList.addAll(foundarrayList2);
             }
             @Override
@@ -221,8 +238,6 @@ public class SearchActivity extends AppCompatActivity {
         resultrecyclerView.setAdapter(adapter);
     }
 }
-
-
 
 class LostAndFoundSearch {
     private static final String TAG = "LostAndFoundSearch";

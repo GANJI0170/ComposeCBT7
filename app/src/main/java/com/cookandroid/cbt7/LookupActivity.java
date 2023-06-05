@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,16 @@ public class LookupActivity extends AppCompatActivity {
         articleImage = (ImageView) findViewById(R.id.articleImage);
         report = (Button) findViewById(R.id.report);
         chat = (Button) findViewById(R.id.chat);
+
+        ImageButton backbtn = (ImageButton) findViewById(R.id.backbtn);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+
+            }
+        });
+
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +78,6 @@ public class LookupActivity extends AppCompatActivity {
 
             }
         });
-
 
         switch (board) {
             case "분실물 게시판":
@@ -132,6 +142,7 @@ public class LookupActivity extends AppCompatActivity {
                 });
                 break;
         }
+
 
 
     }

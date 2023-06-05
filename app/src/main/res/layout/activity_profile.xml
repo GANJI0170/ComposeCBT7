@@ -16,5 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="데이터베이스 저장"/>
+    <Button
+        android:id="@+id/testbtn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="데이터베이스 삭제"/>
 
 </LinearLayout>
