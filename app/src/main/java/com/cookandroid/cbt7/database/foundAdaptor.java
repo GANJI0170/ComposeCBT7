@@ -2,7 +2,9 @@ package com.cookandroid.cbt7.database;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,13 +23,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cookandroid.cbt7.LookupActivity;
 import com.cookandroid.cbt7.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHolder> {
     private ArrayList<articlefoundList> arrayList;
     private Context context;
+    private DatabaseReference databaseReference;
     private int n;
+    private String value, key;
 
     public foundAdaptor(ArrayList<articlefoundList> arrayList, Context context, int n) {
         this.arrayList = arrayList;
@@ -74,6 +83,57 @@ public class foundAdaptor extends RecyclerView.Adapter<foundAdaptor.CustomViewHo
         if(n==0) {
             holder.btnlayout.setVisibility(View.VISIBLE);
         }
+        holder.articledelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogInterface.OnClickListener confirm = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String s = holder.found_num.getText().toString();
+                        System.out.println(s);
+
+                        articledelete(s);
+                    }
+                };
+                DialogInterface.OnClickListener cancle = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                };
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("삭제하시겠습니까?")
+                        .setNegativeButton("아니오", cancle)
+                        .setPositiveButton("삭제", confirm)
+                        .show();
+            }
+        });
+    }
+
+    public void articledelete(String s) {
+        System.out.println("삭제 테스트");
+        databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                key = "";
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    value = snapshot1.child("found_number").getValue(String.class);
+                    System.out.println(value);
+                    if(value.equals(s)) {
+                        System.out.println("동일");
+                        key = snapshot1.getKey();
+                        System.out.println(key);
+                        databaseReference.child(key).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

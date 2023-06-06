@@ -23,8 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cookandroid.cbt7.LookupActivity;
 import com.cookandroid.cbt7.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -33,6 +36,7 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
     private DatabaseReference databaseReference;
     private Context context;
     private int n;
+    private String value, key;
 
     public lostAdaptor(ArrayList<articlelostList> arrayList, Context context, int n) {
         this.arrayList = arrayList;
@@ -65,6 +69,7 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         holder.lost_hits.setText(arrayList.get(position).getLost_hits());
         holder.lost_num.setText(arrayList.get(position).getLost_number());
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +90,10 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
                 DialogInterface.OnClickListener confirm = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        articledelete();
+                        String s = holder.lost_num.getText().toString();
+                        System.out.println(s);
+
+                        articledelete(s);
                     }
                 };
                 DialogInterface.OnClickListener cancle = new DialogInterface.OnClickListener() {
@@ -103,10 +111,30 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         });
     }
 
-    public void articledelete() {
+    public void articledelete(String s) {
         System.out.println("삭제 테스트");
         databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                key = "";
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    value = snapshot1.child("lost_number").getValue(String.class);
+                    System.out.println(value);
+                    if(value.equals(s)) {
+                        System.out.println("동일");
+                        key = snapshot1.getKey();
+                        System.out.println(key);
+                        databaseReference.child(key).removeValue();
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
