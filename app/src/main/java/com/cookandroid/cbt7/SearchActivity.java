@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookandroid.cbt7.database.articlefoundList;
@@ -31,12 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -71,9 +67,8 @@ public class SearchActivity extends AppCompatActivity {
 //        String strFileContents = "제트플립\tNNP\n" + "제트 플립\tNNP\n" + "갤럭시노트10\tNNP\n"
 //                +"아이폰13프로\tNNP\n"+"갤럭시S20울트라\tNNP\n"+"갤럭시S23울트라\tNNP\n"
 //                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
-//                +"갤럭시Z플립4\tNNP\n"+"접이식우산\tNNP\n"+"장우산\tNNP\n"+"골프우산\tNNP\n"
-//                +"거꾸로우산\tNNP\n"+"자동우산\tNNP\n"+"크로스백\tNNP\n"+"여행가방\tNNP\n"
-//                +"백팩\tNNP\n"+"토트백\tNNP\n"+"보스턴백\tNNP\n"+"베이스볼 캡\tNNP\n"
+//                +"거꾸로우산\tNNP\n"+"자동우산\tNNP\n"+"크로스백\tNNP\n"+"캐리어\tNNP\n"
+//                +"백팩\tNNP\n"+"토트백\tNNP\n"+"보스턴백\tNNP\n"+"베이스볼 캡\tNNP\n"+"베이스볼캡\tNNP\n"
 //                +"비니\tNNP\n"+"페도라\tNNP\n"+"버킷햇\tNNP\n"+"트루퍼햇\tNNP\n"
 //                +"장지갑\tNNP\n"+"반지갑\tNNP\n"+"동전지갑\tNNP\n";
 //        try {
@@ -136,7 +131,20 @@ public class SearchActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result = mSearch.searchKeyword(editText.getText().toString());
+
+                KomoranResult test = LostAndFoundSearch.komoran.analyze(editText.getText().toString());
+                List<Token> tokens = test.getTokenList();
+                ArrayList<String> keywordlist = new ArrayList<>();
+                for (Token token : tokens) {
+                    String pos = token.getPos();
+                    if (pos.equals("NNP") || pos.equals("NNG")) { // 고유명사 또는 일반명사만 추출
+                        keywordlist.add(token.getMorph());
+                    }
+                }
+
+                List<String> list = mSearch.searchKeyword(editText.getText().toString(), keywordlist);
+                resultoriginal = list.get(0);
+                result = list.get(1);
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                 switch (spinnerStr) {
@@ -170,7 +178,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void lostdatabase() {
-        resultoriginal = editText.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
         lostarrayList.clear();
         lostarrayList2.clear();
@@ -179,12 +186,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("lost_keyword").getValue(String.class);
-                    if(str.contains(resultoriginal)) {
+                    if(str.contains(result)) {
                         articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                        if(str.contains(result)) {
-                            lostarrayList2.add(articlelostList);
-                        }else {
+                        if(str.contains(resultoriginal)) {
                             lostarrayList.add(articlelostList);
+                        }else {
+                            lostarrayList2.add(articlelostList);
                         }
                     }
                 }
@@ -204,7 +211,6 @@ public class SearchActivity extends AppCompatActivity {
         resultrecyclerView.setAdapter(adapter);
     }
     public void founddatabase() {
-        resultoriginal = editText.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
         foundarrayList.clear();
         foundarrayList2.clear();
@@ -213,12 +219,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("found_keyword").getValue(String.class);
-                    if(str.contains(resultoriginal)) {
+                    if(str.contains(result)) {
                         articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                        if(str.contains(result)) {
-                            foundarrayList2.add(articlefoundList);
-                        }else {
+                        if(str.contains(resultoriginal)) {
                             foundarrayList.add(articlefoundList);
+                        }else {
+                            foundarrayList2.add(articlefoundList);
                         }
                     }
                 }
@@ -243,6 +249,7 @@ class LostAndFoundSearch {
     private static final String TAG = "LostAndFoundSearch";
     private Context mContext;
     private Map<String, String> mDictionary;
+    public static Komoran komoran;
 
     public LostAndFoundSearch(Context context) {
         mContext = context;
@@ -252,7 +259,7 @@ class LostAndFoundSearch {
     public void loadKeywords() {
         try {
             // 코모란 초기화
-            Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+            komoran = new Komoran(DEFAULT_MODEL.FULL);
             komoran.setUserDic("/data/data/com.cookandroid.cbt7/files/userDic.txt");
             // 키워드가 포함된 텍스트 파일 읽어오기
             InputStream inputStream = getAssetInputStream("lostfoundkeywords.txt");
@@ -263,7 +270,6 @@ class LostAndFoundSearch {
                 KomoranResult result = komoran.analyze(line);
                 List<Token> tokens = result.getTokenList();
                 for (Token token : tokens) {
-                    System.out.println("token : " + token);
                     String pos = token.getPos();
                     if (pos.equals("NNP") || pos.equals("NNG")) { // 고유명사 또는 일반명사만 추출
                         String keyword = token.getMorph();
@@ -272,9 +278,8 @@ class LostAndFoundSearch {
                         break;
                     }
                 }
-                System.out.println("한줄 끝");
-                System.out.println(mDictionary);
             }
+            System.out.println(mDictionary);
 
             bufferedReader.close();
             inputStream.close();
@@ -283,12 +288,31 @@ class LostAndFoundSearch {
         }
     }
 
-    public String searchKeyword(String keyword) {
+    public List<String> searchKeyword(String keyword, ArrayList<String> list) {
+        List<String> l = new ArrayList<>();
         if (mDictionary.containsKey(keyword)) {
-            return mDictionary.get(keyword);
+            for(String s : list) {
+                l.add(s);
+            }
+            l.add(mDictionary.get(keyword));
+            System.out.println("1번"+l);
+            return l;
         } else {
-            return keyword;
-            //검색어 없을시 그대로 검색되는 처리해줘야함.
+            for(String s : list) {
+                System.out.println(s);
+                if(mDictionary.containsKey(s)) {
+                    l.add(s);
+                    l.add(mDictionary.get(s));
+                }
+            }
+            if(l.size() == 0) {
+                l.add("없음");
+                l.add("없음");
+                System.out.println("3번"+l);
+                return l;
+            }
+            System.out.println("2번"+l);
+            return l;
         }
     }
 
