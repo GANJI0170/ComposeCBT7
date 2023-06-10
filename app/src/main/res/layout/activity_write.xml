@@ -15,13 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
+            <ImageButton
+                android:id="@+id/backbtn"
+                android:layout_width="0sp"
+                android:layout_height="58sp"
+                android:layout_weight="1"
+                android:src="@drawable/bpbtn"
+                android:background="#22CB88"
+                android:scaleType="centerInside"/>
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
+                android:layout_weight="8"
                 android:layout_gravity="center"
                 android:background="#22CB88"
-                android:text=" 게시글 작성"
+                android:text="게시글 작성   "
                 android:textColor="#FFFFFF"
                 android:textSize="40sp"
                 android:textAlignment="center"/>
@@ -35,12 +43,14 @@
             android:orientation="horizontal">
 
             <RadioGroup
+                android:id="@+id/boardRG"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:checkedButton="@id/radioButton1">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/radioButton1"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|left"
@@ -66,17 +76,17 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editTextText2"
-                android:layout_width="wrap_content"
+                android:id="@+id/titleedit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
                 android:hint="제목" />
 
             <EditText
-                android:id="@+id/editTextText3"
-                android:layout_width="wrap_content"
+                android:id="@+id/keywordedit"
+                android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
@@ -92,22 +102,21 @@
                 android:layout_gravity="center"/>
 
             <EditText
+                android:id="@+id/dateedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:inputType="text"
+                android:hint="분실/습득 날짜 : yyyy-mm-dd" />
+
+            <EditText
                 android:id="@+id/placeedit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name" />
-
-            <EditText
-                android:id="@+id/dateedit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Name" />
+                android:hint="분실/습득 장소" />
 
             <EditText
                 android:id="@+id/thingedit"
@@ -116,17 +125,24 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="분실/습득 물건"
                 />
 
             <EditText
-                android:id="@+id/pointedit"
+                android:id="@+id/featureedit"
                 android:layout_width="357dp"
                 android:layout_height="51dp"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name" />
+                android:hint="분실물/습득물 특징" />
+
+            <EditText
+                android:id="@+id/detailedit"
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:layout_margin="10sp"
+                android:hint="상세 내용"/>
 
             <TextView
                 android:id="@+id/textView9"

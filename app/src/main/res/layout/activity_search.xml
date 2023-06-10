@@ -16,6 +16,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/backbtn"
+                android:layout_width="0sp"
+                android:layout_height="58sp"
+                android:layout_weight="1"
+                android:src="@drawable/bpbtn"
+                android:background="#22CB88"
+                android:scaleType="centerInside"/>
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_gravity="center"
+                android:background="#22CB88"
+                android:text="검색결과"
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinner"
@@ -30,7 +54,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:layout_gravity="left"
-                android:background="#22CB88"
                 android:hint=" 검색어를 입력해주세요"
                 android:inputType="textPersonName" />
 
@@ -58,15 +81,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="           검색결과"
-                    android:textSize="25sp"
-                    android:id="@+id/test11"
-                    android:gravity="center" />
-
                 <Button
                     android:id="@+id/btnimage"
                     android:layout_width="0sp"
@@ -74,6 +88,28 @@
                     android:layout_weight="1"
                     android:text="이미지" />
             </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/resultradiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:checkedButton="@id/newestradiobtn">
+
+                <RadioButton
+                    android:id="@+id/newestradiobtn"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="최신순"/>
+                <RadioButton
+                    android:id="@+id/oldradiobtn"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="오래된순"/>
+                
+            </RadioGroup>
 
             <View
                 android:layout_width="match_parent"

@@ -9,16 +9,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/board_type"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#22CB88"
-            android:text="게시판"
-            android:textColor="#FFFFFF"
-            android:textSize="40sp"
-            android:textAlignment="center"/>
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/backbtn"
+                android:layout_width="0sp"
+                android:layout_height="58sp"
+                android:layout_weight="1"
+                android:src="@drawable/bpbtn"
+                android:background="#22CB88"
+                android:scaleType="centerInside"/>
+
+            <TextView
+                android:id="@+id/board_type"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_gravity="center"
+                android:background="#22CB88"
+                android:text="게시판    "
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,9 +88,10 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="분실한 날짜 : "
+                android:text="분실 날짜 : "
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
@@ -89,6 +107,7 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textplace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실 장소 : "
@@ -107,6 +126,7 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textthing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실 물건 : "
@@ -125,6 +145,7 @@
             android:orientation="horizontal"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textfeature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실물 특징 : "
@@ -144,6 +165,7 @@
             android:orientation="vertical"
             android:layout_margin="10sp">
             <TextView
+                android:id="@+id/textdetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실물 상세내용 : "
