@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".KeywordActivity"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:orientation="vertical">
+
+<TextView
+    android:id="@+id/test"
+    android:layout_width="414dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="16dp"
+    android:text="키워드 설정"
+    android:textAlignment="center"
+    android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/keywordText"
+            android:layout_width="327dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="키워드를 입력하세요"
+            android:inputType="text"
+            android:text="" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="203dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="등록" />
+    </LinearLayout>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        app:chipSpacing="8dp">
+    </com.google.android.material.chip.ChipGroup>
+
+</LinearLayout>

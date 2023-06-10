@@ -2,8 +2,11 @@ package com.cookandroid.cbt7;
 
 import static java.security.AccessController.getContext;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -216,6 +221,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView1.setAdapter(adapter1);
         recyclerView2.setAdapter(adapter2);
     }
+
     //채팅방 연동
 
 
