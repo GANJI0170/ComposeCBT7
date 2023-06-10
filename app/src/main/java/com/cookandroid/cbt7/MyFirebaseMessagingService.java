@@ -62,7 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             // Android 8.0 (Oreo) 이상 버전에서는 알림 채널을 생성해야 합니다.
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("My Notification Chnnel");
+            channel.setDescription("My Notification Channel");
             channel.enableLights(true);
             channel.setLightColor(Color.RED);
             channel.enableVibration(true);
