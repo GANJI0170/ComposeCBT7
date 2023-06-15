@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!--앱에 이미지 권한을 부여하기 위한 코드-->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+        android:maxSdkVersion="33" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--android:usesCleartextTraffic="true" 라인은 https가 아닌 http 통신을 위한 라인-->
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- 진동 권한 추가 -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" /> <!-- 알림 설정 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+  
     <application
+        android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +22,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.CBT7"
-        tools:targetApi="31">
+        tools:targetApi ="31">
         <activity
             android:name=".LookupActivity"/>
         <activity
