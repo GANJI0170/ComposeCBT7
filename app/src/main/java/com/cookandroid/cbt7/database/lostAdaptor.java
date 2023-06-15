@@ -2,9 +2,7 @@ package com.cookandroid.cbt7.database;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,20 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cookandroid.cbt7.LookupActivity;
 import com.cookandroid.cbt7.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHolder> {
     private ArrayList<articlelostList> arrayList;
-    private DatabaseReference databaseReference;
     private Context context;
     private int n;
-    private String value, key;
 
     public lostAdaptor(ArrayList<articlelostList> arrayList, Context context, int n) {
         this.arrayList = arrayList;
@@ -69,7 +60,6 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         holder.lost_hits.setText(arrayList.get(position).getLost_hits());
         holder.lost_num.setText(arrayList.get(position).getLost_number());
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,59 +72,8 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
             }
         });
         if(n==0) {
-            holder.btnlayout.setVisibility(View.VISIBLE);
+            holder.btnlatouy.setVisibility(View.VISIBLE);
         }
-        holder.articledelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogInterface.OnClickListener confirm = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String s = holder.lost_num.getText().toString();
-                        System.out.println(s);
-
-                        articledelete(s);
-                    }
-                };
-                DialogInterface.OnClickListener cancle = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                };
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle("삭제하시겠습니까?")
-                        .setNegativeButton("아니오", cancle)
-                        .setPositiveButton("삭제", confirm)
-                        .show();
-            }
-        });
-    }
-
-    public void articledelete(String s) {
-        System.out.println("삭제 테스트");
-        databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                key = "";
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    value = snapshot1.child("lost_number").getValue(String.class);
-                    System.out.println(value);
-                    if(value.equals(s)) {
-                        System.out.println("동일");
-                        key = snapshot1.getKey();
-                        System.out.println(key);
-                        databaseReference.child(key).removeValue();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     @Override
@@ -151,7 +90,7 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
         TextView lost_hits;
         TextView lost_num;
         Button articledelete, articleretouch;
-        LinearLayout btnlayout;
+        LinearLayout btnlatouy;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -163,7 +102,7 @@ public class lostAdaptor extends RecyclerView.Adapter<lostAdaptor.CustomViewHold
             this.lost_hits = itemView.findViewById(R.id.board_hits);
             this.lost_num = itemView.findViewById(R.id.board_Num);
 
-            this.btnlayout = itemView.findViewById(R.id.btnlayout);
+            this.btnlatouy = itemView.findViewById(R.id.btnlayout);
             this.articledelete = itemView.findViewById(R.id.articledelete);
             this.articleretouch = itemView.findViewById(R.id.articleretouch);
         }

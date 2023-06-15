@@ -19,8 +19,6 @@
         <activity
             android:name=".AlarmActivity"/>
         <activity
-            android:name=".MyarticleActivity"/>
-        <activity
             android:name=".WriteActivity"/>
         <activity
             android:name=".ChatActivity"
