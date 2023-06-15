@@ -22,9 +22,10 @@
             android:layout_weight="8"
             android:layout_gravity="center"
             android:background="#22CB88"
+            android:padding="14dp"
             android:text="내 게시글"
             android:textColor="#FFFFFF"
-            android:textSize="40sp"
+            android:textSize="20sp"
             android:textAlignment="center"/>
     </LinearLayout>
 

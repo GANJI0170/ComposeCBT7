@@ -10,13 +10,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 public class KeywordActivity extends AppCompatActivity {
     private TextView test;
     private EditText keywordText;
     private Button button2;
-    private ChipGroup chipGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +25,6 @@ public class KeywordActivity extends AppCompatActivity {
         test = findViewById(R.id.test);
         keywordText = findViewById(R.id.keywordText);
         button2 = findViewById(R.id.button2);
-        chipGroup = findViewById(R.id.chipGroup);
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,9 +36,6 @@ public class KeywordActivity extends AppCompatActivity {
                 chip.setText(enteredText);
                 chip.setCloseIconVisible(true);
                 chip.setClickable(true);
-
-                // Add the Chip to the ChipGroup
-                chipGroup.addView(chip);
 
                 // Clear the EditText
                 keywordText.setText("");
