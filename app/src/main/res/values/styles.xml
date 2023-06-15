@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
+        <item name="chipStyle">@style/Widget.MaterialComponents.Chip.Entry</item>
+    </style>
+</resources>
