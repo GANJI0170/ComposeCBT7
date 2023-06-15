@@ -1,39 +1,34 @@
 package com.cookandroid.cbt7;
 
-import static java.security.AccessController.getContext;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TabHost;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.cbt7.database.CustomAdapter;
 import com.cookandroid.cbt7.database.articlefoundList;
 import com.cookandroid.cbt7.database.articlelostList;
-import com.cookandroid.cbt7.database.chatList;
 import com.cookandroid.cbt7.database.foundAdaptor;
 import com.cookandroid.cbt7.database.lostAdaptor;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TabHost;
-import android.widget.Toast;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -46,10 +41,31 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference databaseReference1, databaseReference2;
     private Button btnSearch, btnwrite, btnmyarticle, btnchat, btnalarm, btnprofile;
 
+    FirebaseDatabase database_re = FirebaseDatabase.getInstance();
+    DatabaseReference lostRef = database_re.getReference("lost_article");
+    DatabaseReference foundRef = database_re.getReference("found_article");
+    Query query = foundRef.limitToFirst(80);
+
+    private String lostContent, foundContent, foundNumber;
+
+    RecyclerView rcommend_re;
+    recommendAdaptor recommend_ad;
+    List<found_list> foundList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        rcommend_re = findViewById(R.id.recyclerView5);
+
+        // LinearLayoutManager를 사용하여 리사이클러뷰에 레이아웃 매니저 설정
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rcommend_re.setLayoutManager(layoutManager);
+
+        recommend_ad = new recommendAdaptor(foundList, this, 1);
+        rcommend_re.setAdapter(recommend_ad);
+
 
 //      탭호스트 설정
         TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);
@@ -125,6 +141,125 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //추천
+        lostRef.orderByChild("lost_id").equalTo("user001").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    DataSnapshot latestSnapshot = dataSnapshot.getChildren().iterator().next();
+                    lostContent = latestSnapshot.child("lost_content").getValue(String.class);
+                } else {
+                    Log.d("MainActivity", "No matching data found.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("MainActivity", "Error retrieving data: " + databaseError.getMessage());
+            }
+        });
+
+        foundList = new ArrayList<>();
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    List<found_list> resultList = new ArrayList<>();
+                    foundList.clear();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        foundNumber = snapshot.child("found_number").getValue(String.class);
+                        foundContent = snapshot.child("found_content").getValue(String.class);
+
+                        //유사도 추출(레벤슈타인 클래스)
+                        double similarity = Levenshtin.SimilarityCalculator.calculateSimilarity(lostContent, foundContent);
+
+                        // found_list 객체 생성 및 값을 설정
+                        found_list foundItem = new found_list();
+                        foundItem.setFound_number(foundNumber);
+                        foundItem.setFound_content(foundContent);
+                        foundItem.setFound_similarity(similarity);
+
+                        resultList.add(foundItem);
+
+//                        // 유사도 계산 및 결과 출력(메인 함수내에서)
+//                        calculateAndDisplaySimilarity(foundNumber, foundContent);
+                    }
+
+                    //getTopNItems 함수 호출하여 내림차순 되어 있는 리스트에서 10개의 값 추출
+                    List<found_list> top10List = getTopNItems(resultList, 10);
+
+                    // found_list를 사용하여 원하는 작업 수행
+                    // 예를 들어, 리스트를 어댑터에 설정하여 화면에 표시
+                    //유사도 순으로 리사이클 뷰에 표시하기
+                    foundRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            List<found_list> matchingSnapshots = new ArrayList<>();
+
+                            for (found_list item : top10List) {
+                                String foundNumberFromTop10 = item.getFound_number();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    String foundNumberFromSnapshot = snapshot.child("found_number").getValue(String.class);
+                                    if (foundNumberFromTop10.equals(foundNumberFromSnapshot)) {
+                                        found_list foundItem = new found_list();
+                                        foundItem.setFound_number(foundNumberFromTop10);
+                                        foundItem.setFound_date(snapshot.child("found_date").getValue(String.class));
+                                        foundItem.setFound_hits(snapshot.child("found_hits").getValue(String.class));
+                                        foundItem.setFound_id(snapshot.child("found_id").getValue(String.class));
+                                        foundItem.setFound_keyword(snapshot.child("found_keyword").getValue(String.class));
+                                        foundItem.setFound_post_date(snapshot.child("found_post_date").getValue(String.class));
+                                        foundItem.setFound_title(snapshot.child("found_title").getValue(String.class));
+                                        foundItem.setFound_image(snapshot.child("found_image").getValue(String.class));
+
+                                        matchingSnapshots.add(foundItem);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            // matchingSnapshots를 리사이클러뷰에 설정하고 표시하는 작업 수행
+                            // ...
+                            // matchingSnapshots를 어댑터에 설정
+                            recommend_ad.setData(matchingSnapshots);
+
+                            // 변경사항 반영
+                            recommend_ad.notifyDataSetChanged();
+
+                            // 로그로 출력해보기
+                            for (found_list item : matchingSnapshots) {
+                                Log.d("MainActivity", item.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("MainActivity", "Error retrieving data: " + databaseError.getMessage());
+                        }
+                    });
+
+//                    //앱에 re_list 텍스트 뷰로 나타내기
+//                    StringBuilder result = new StringBuilder();
+//                    for (found_list data : top10List) {
+//                        result.append("Number: ").append(data.getFound_number())
+//                                .append(", Content: ").append(data.getFound_content())
+//                                .append(", Similarity: ").append(data.getFound_similarity())
+//                                .append("\n");
+//                    }
+//                    re_list.setText(result.toString());
+
+                } else {
+                    Log.d("MainActivity", "No matching data found.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("MainActivity", "Error retrieving data: " + databaseError.getMessage());
+            }
+        });
+
     }
 
     private void boardDatabase() {
@@ -192,5 +327,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    //추천글
+    //유사도를 추출한 리스트에 대해 내림차순정렬
+    private List<found_list> getTopNItems(List<found_list> list, int n) {
+        Collections.sort(list, new SimilarityComparator());
+
+        return list.subList(0, Math.min(list.size(), n));
+    }
 }
 
