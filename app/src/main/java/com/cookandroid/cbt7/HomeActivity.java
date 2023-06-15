@@ -1,6 +1,6 @@
 package com.cookandroid.cbt7;
 
-import static java.security.AccessController.getContext;
+//import static java.security.AccessController.getContext;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.cbt7.database.CustomAdapter;
+//import com.cookandroid.cbt7.database.CustomAdapter;
 import com.cookandroid.cbt7.database.articlefoundList;
 import com.cookandroid.cbt7.database.articlelostList;
-import com.cookandroid.cbt7.database.chatList;
+//import com.cookandroid.cbt7.database.chatList;
 import com.cookandroid.cbt7.database.foundAdaptor;
 import com.cookandroid.cbt7.database.lostAdaptor;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+//import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,23 +25,23 @@ import com.google.firebase.database.ValueEventListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
+//import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+//import android.widget.FrameLayout;
+//import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+//import java.text.DateFormat;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
+//import java.util.Comparator;
+//import java.util.Date;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 //      검색 버튼 클릭시 검색화면으로 전환
-        btnSearch = (Button)findViewById(R.id.btnSearch) ;
+        btnSearch = (Button)findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
