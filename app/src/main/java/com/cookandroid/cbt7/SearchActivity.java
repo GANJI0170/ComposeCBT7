@@ -209,12 +209,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("lost_keyword").getValue(String.class);
-                    if(str.contains(resultoriginal)) {
+                    if(str.contains(result)) {
                         articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                        if(str.contains(result)) {
-                            lostarrayList2.add(articlelostList);
-                        }else {
+                        if(str.contains(resultoriginal)) {
                             lostarrayList.add(articlelostList);
+                        }else {
+                            lostarrayList2.add(articlelostList);
                         }
                     }
                 }
@@ -243,12 +243,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("found_keyword").getValue(String.class);
-                    if(str.contains(resultoriginal)) {
+                    if(str.contains(result)) {
                         articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                        if(str.contains(result)) {
-                            foundarrayList2.add(articlefoundList);
-                        }else {
+                        if(str.contains(resultoriginal)) {
                             foundarrayList.add(articlefoundList);
+                        }else {
+                            foundarrayList2.add(articlefoundList);
                         }
                     }
                 }
