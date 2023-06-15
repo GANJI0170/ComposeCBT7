@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +17,7 @@ public class KeywordActivity extends AppCompatActivity {
     private TextView test;
     private EditText keywordText;
     private Button button2;
-    private ChipGroup chipGroup;
+    private ChipGroup chip_Group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class KeywordActivity extends AppCompatActivity {
         test = findViewById(R.id.test);
         keywordText = findViewById(R.id.keywordText);
         button2 = findViewById(R.id.button2);
-        chipGroup = findViewById(R.id.chipGroup);
+//        chip_Group = findViewById(R.id.chip_Group);
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,12 +42,20 @@ public class KeywordActivity extends AppCompatActivity {
                 chip.setClickable(true);
 
                 // Add the Chip to the ChipGroup
-                chipGroup.addView(chip);
+                chip_Group.addView(chip);
 
                 // Clear the EditText
                 keywordText.setText("");
             }
         });
+        // chip 인스턴스 클릭 리스너
+        chip_Group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(KeywordActivity.this, "Check", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 }

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         lostpsbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(MainActivity.this, "비밀번호찾기", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "비밀번호d찾기", Toast.LENGTH_SHORT).show();
             }
         });
     }
