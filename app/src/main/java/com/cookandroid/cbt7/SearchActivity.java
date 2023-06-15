@@ -156,20 +156,7 @@ public class SearchActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                KomoranResult test = LostAndFoundSearch.komoran.analyze(editText.getText().toString());
-                List<Token> tokens = test.getTokenList();
-                ArrayList<String> keywordlist = new ArrayList<>();
-                for (Token token : tokens) {
-                    String pos = token.getPos();
-                    if (pos.equals("NNP") || pos.equals("NNG")) { // 고유명사 또는 일반명사만 추출
-                        keywordlist.add(token.getMorph());
-                    }
-                }
-
-                List<String> list = mSearch.searchKeyword(editText.getText().toString(), keywordlist);
-                resultoriginal = list.get(0);
-                result = list.get(1);
+                result = mSearch.searchKeyword(editText.getText().toString());
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                 switch (spinnerStr) {
@@ -213,6 +200,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void lostdatabase() {
+        resultoriginal = editText.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("lost_article");
         lostarrayList.clear();
         lostarrayList2.clear();
@@ -221,12 +209,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("lost_keyword").getValue(String.class);
-                    if(str.contains(result)) {
+                    if(str.contains(resultoriginal)) {
                         articlelostList articlelostList = dataSnapshot.getValue(articlelostList.class);
-                        if(str.contains(resultoriginal)) {
-                            lostarrayList.add(articlelostList);
-                        }else {
+                        if(str.contains(result)) {
                             lostarrayList2.add(articlelostList);
+                        }else {
+                            lostarrayList.add(articlelostList);
                         }
                     }
                 }
@@ -246,6 +234,7 @@ public class SearchActivity extends AppCompatActivity {
         resultrecyclerView.setAdapter(adapter);
     }
     public void founddatabase() {
+        resultoriginal = editText.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("found_article");
         foundarrayList.clear();
         foundarrayList2.clear();
@@ -254,12 +243,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String str = dataSnapshot.child("found_keyword").getValue(String.class);
-                    if(str.contains(result)) {
+                    if(str.contains(resultoriginal)) {
                         articlefoundList articlefoundList = dataSnapshot.getValue(articlefoundList.class);
-                        if(str.contains(resultoriginal)) {
-                            foundarrayList.add(articlefoundList);
-                        }else {
+                        if(str.contains(result)) {
                             foundarrayList2.add(articlefoundList);
+                        }else {
+                            foundarrayList.add(articlefoundList);
                         }
                     }
                 }
@@ -345,7 +334,7 @@ public class SearchActivity extends AppCompatActivity {
             public void run() {
                 String normalizedKeyword = Normalizer.normalize(responseServer, Normalizer.Form.NFC);
                 editText.setText(normalizedKeyword);
-                result = mSearch.searchImage(normalizedKeyword);
+                result = mSearch.searchKeyword(normalizedKeyword);
 
                 switch (spinnerStr) {
                     case "분실물":
@@ -364,7 +353,7 @@ public class SearchActivity extends AppCompatActivity {
         String imagePath = getImagePath(imageUri);
         File imageFile = new File(imagePath);
         // 서버 주소
-        String ngrokServerUrl = "http://45c9-34-82-138-130.ngrok.io";
+        String ngrokServerUrl = "http://239d-34-126-82-33.ngrok.io";
 
         new Thread(() -> {
             System.out.println("thread 작동");
@@ -431,7 +420,7 @@ class LostAndFoundSearch {
     public void loadKeywords() {
         try {
             // 코모란 초기화
-            komoran = new Komoran(DEFAULT_MODEL.FULL);
+            Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
             komoran.setUserDic("/data/data/com.cookandroid.cbt7/files/userDic.txt");
             // 키워드가 포함된 텍스트 파일 읽어오기
             InputStream inputStream = getAssetInputStream("lostfoundkeywords.txt");
@@ -460,41 +449,12 @@ class LostAndFoundSearch {
         }
     }
 
-    public String searchImage(String keyword) {
+    public String searchKeyword(String keyword) {
         if (mDictionary.containsKey(keyword)) {
             return mDictionary.get(keyword);
-        }
-        else {
+        } else {
             return keyword;
             //검색어 없을시 그대로 검색되는 처리해줘야함.
-        }
-    }
-
-    public List<String> searchKeyword(String keyword, ArrayList<String> list) {
-        List<String> l = new ArrayList<>();
-        if (mDictionary.containsKey(keyword)) {
-            for(String s : list) {
-                l.add(s);
-            }
-            l.add(mDictionary.get(keyword));
-            System.out.println("1번"+l);
-            return l;
-        } else {
-            for(String s : list) {
-                System.out.println(s);
-                if(mDictionary.containsKey(s)) {
-                    l.add(s);
-                    l.add(mDictionary.get(s));
-                }
-            }
-            if(l.size() == 0) {
-                l.add("없음");
-                l.add("없음");
-                System.out.println("3번"+l);
-                return l;
-            }
-            System.out.println("2번"+l);
-            return l;
         }
     }
 
